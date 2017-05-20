@@ -93,6 +93,7 @@ function Loop(){
 
 function Update(){
 	frames++;
+	lastDirection = snakeDirection;
 	if (keyState[KEYLEFT] && snakeDirection !== RIGHT) {
 		snakeDirection = LEFT;
 	}
@@ -109,6 +110,12 @@ function Update(){
 	if(frames % speed === 0){
 		var nx = snakeLast.x;
 		var ny = snakeLast.y;
+		
+		// prevent running into self
+		if(snakeDirection == DOWN && lastDirection == UP) snakeDirection == lastDirection;
+		if(snakeDirection == RIGHT && lastDirection == LEFT) snakeDirection == lastDirection;
+		if(snakeDirection == UP && lastDirection == DOWN) snakeDirection == lastDirection;
+		if(snakeDirection == LEFT && lastDirection == RIGHT) snakeDirection == lastDirection;
 		
 		switch(snakeDirection){
 			case LEFT:
