@@ -16,7 +16,7 @@ function DiffChoose(s, c, o, n){
 	operations = o;
 	numberRange = n;
 	SaveSettings();
-	window.location.href = 'JS Snake.html'
+	window.location.href = 'app.html'
 }
 
 function SaveSettings(){
