@@ -93,7 +93,6 @@ function Loop(){
 
 function Update(){
 	frames++;
-	lastDirection = snakeDirection;
 	if (keyState[KEYLEFT] && snakeDirection !== RIGHT) {
 		snakeDirection = LEFT;
 	}
@@ -108,15 +107,11 @@ function Update(){
 	}
 	
 	if(frames % speed === 0){
+		// Get new x and new y
 		var nx = snakeLast.x;
 		var ny = snakeLast.y;
 		
-		// prevent running into self
-		if(snakeDirection == DOWN && lastDirection == UP) snakeDirection == lastDirection;
-		if(snakeDirection == RIGHT && lastDirection == LEFT) snakeDirection == lastDirection;
-		if(snakeDirection == UP && lastDirection == DOWN) snakeDirection == lastDirection;
-		if(snakeDirection == LEFT && lastDirection == RIGHT) snakeDirection == lastDirection;
-		
+		// change the new head position based on direction 
 		switch(snakeDirection){
 			case LEFT:
 				nx--;
@@ -133,26 +128,30 @@ function Update(){
 			case PAUSE:	
 				return;
 		}
+		
+		// restart if you run into the wall
 		if(	0 > nx || nx > COLS-1 || 0 > ny || ny > ROWS-1){
+			alert("You hit the wall. Replay?");
 			location.reload();
 			//return Init();
 			}
-
+		// restart if you run into yourself
 		if(GridGet(nx, ny) === SNAKE){
+			alert("You ate yourself. Sad snake :(")
 			location.reload();
 		}
-		
+		// takes the value of the new head position 
 		switch(GridGet(nx, ny)){
 			case ANS1:
 				if(choice1 == answer){             	// If correct answer
 					var snakeTail = {x:nx, y:ny};  	// snakeTail = the point of the answer cell
-					score++;						// Increase score
-					ResetFoods();					// Reset food
-					GenerateAnswer();				// Generate answers
-					SetFood();						// Setfood
-				} else {								// NOT CORRECT
+					score++;			// Increase score
+					ResetFoods();			// Reset food
+					GenerateAnswer();		// Generate answers
+					SetFood();			// Setfood
+				} else {				// NOT CORRECT
 					alert("Oh, no. That's the wrong answer." + question + " = " + answer + ". Replay?")
-					location.reload();					// RELOAD PAGE (DEAD SNAKE DAMN)
+					location.reload();		// RELOAD PAGE (DEAD SNAKE DAMN)
 					//return Init();
 				}
 				break;
@@ -195,16 +194,16 @@ function Update(){
 					//return Init();
 				}
 				break;
-			default:
-					var snakeTail = SnakeRemove();
-					GridSet(snakeTail.x, snakeTail.y, EMPTY);
-					snakeTail.x = nx;
-					snakeTail.y = ny;
+			default:   		//if not anything special
+				var snakeTail = SnakeRemove();		 //take tail
+				GridSet(snakeTail.x, snakeTail.y, EMPTY);	// set its position EMPTY
+				snakeTail.x = nx;			// put tail at new head position
+				snakeTail.y = ny;			//--------------------------------
 				break;
 		}
-		document.getElementById("score").innerHTML = score;
-		SnakeAdd(snakeTail.x, snakeTail.y);	
-		GridSet(nx, ny, SNAKE);
+		document.getElementById("score").innerHTML = score;     //display score
+		SnakeAdd(snakeTail.x, snakeTail.y);			//add new position to snake array
+		GridSet(nx, ny, SNAKE);					//set new position to SNAKE
 	}
 }
 
