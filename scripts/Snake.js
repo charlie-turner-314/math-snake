@@ -94,7 +94,7 @@ function Loop(){
 function Update(){
 	frames++;
 	
-	if (snakeDirection == PAUSE) document.getElementById("question").innerHTML = "Use Arrow Keys To Move Snake";
+	//if (snakeDirection == PAUSE) document.getElementById("question").innerHTML = "Use Arrow Keys To Move Snake";
 	
 	if (keyState[KEYLEFT] && snakeDirection !== RIGHT) {
 		snakeDirection = LEFT;
