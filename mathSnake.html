@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Welcome to JS Snake - Math</title>
+</head>
+<style>
+@font-face { font-family: Nexa Light; src: url('fonts/Nexa Light.ttf'); }
+@font-face { font-family: Nexa Bold; src: url('fonts/Nexa Bold.ttf'); }
+
+body{
+	background-color: rgb(39,39,34);
+	color: rgb(200,200,200);
+}
+
+h3 {
+	font-family:Nexa Bold;
+	margin:auto;
+	line-height: 40px;
+	width: 100%;
+	height: 40px;
+	padding: 0px;
+	text-align: center;
+	border-style: solid;
+	border-width: 1px 0px 1px 0px;
+	border-color: rgb(200,200,200);
+}
+#d1{
+	border-width: 2px 0px 1px 0px;
+}
+#sM{
+	border-width: 1px 0px 2px 0px;
+}
+
+#d1:hover{
+	background-color:rgb(80,80,80);
+}
+#d2:hover{
+	background-color:rgb(80,80,80);
+}
+#d3:hover{
+	background-color:rgb(80,80,80);
+}
+#d4:hover{
+	background-color:rgb(80,80,80);
+}
+#d5:hover{
+	background-color:rgb(80,80,80);
+}
+#d6:hover{
+	background-color:rgb(80,80,80);
+}
+#sM:hover{
+	background-color:rgb(80,80,80);
+}
+</style>
+<script src="scripts/WelcomeScreen.js"></script>
+
+<body>
+<h1 style="font-family:Nexa Bold; text-align:center;">Welcome To JS Snake... Math Edition!</h1>
+<h2 style="font-family:Nexa Light; text-align:center;">Select Difficulty To Begin</h2>
+<br>
+<h3 id="d1" onclick="DiffChoose(10, 40, 2, 10)"> DIFFICULTY 1 </h3>
+<h3 id="d2" onclick="DiffChoose(9, 35, 3, 5)"> DIFFICULTY 2 </h3>
+<h3 id="d3" onclick="DiffChoose(8, 30, 1, 5)"> DIFFICULTY 3 </h3>
+<h3 id="d4" onclick="DiffChoose(7, 25, 1, 10)"> DIFFICULTY 4 </h3>
+<h3 id="d5" onclick="DiffChoose(6, 20, 4, 10)"> DIFFICULTY 5 </h3>
+<h3 id="d6" onclick="DiffChoose(5, 15, 4, 20)"> DIFFICULTY 6 </h3>
+<h3 id="sM" onclick="DiffChoose(4, 12, 4, 50)"> SNAKE MASTER </h3>
+</body>
+</html>
