@@ -6,8 +6,8 @@ var
 cellSize=20, //size of cells (pixels)
 speed=5,    // speed of game (1 is super fast --- higher is slower)
 operations=2, // types of questions
-numberRange=50; // range of numbers to do math
-increaseFactor=1; //number of cells to increase by each time
+numberRange=50, // range of numbers to do math
+difficulty="UNKNOWN";  //number indicating current difficulty
 
 var
 canvas,  //The canvas
@@ -405,5 +405,8 @@ function LoadSettings(){
 		if(typeof settings.operations !== "undefined") operations = settings.operations;
 		if(typeof settings.numberRange !== "undefined") numberRange = settings.numberRange;
 		if(typeof settings.increaseFactor !== "undefined") increaseFactor = settings.increaseFactor;
+		if(typeof settings.difficulty !== "undefined") difficulty = settings.difficulty;
 	}
+	if(difficulty == 7) difficulty = "SNAKE MASTER"
+	document.getElementById("difficulty").innerHTML = difficulty;
 }
