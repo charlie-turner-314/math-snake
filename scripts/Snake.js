@@ -290,10 +290,10 @@ function Draw(){
 		for(var y=0; y < ROWS; y++){
 			switch(GridGet(x, y)){
 					case EMPTY:
-						context.fillStyle = "rgb(166,52,52)";
+						context.fillStyle = "rgb(50,50,50)";
 						break;
 					case SNAKE:
-						context.fillStyle = "black";
+						context.fillStyle = "rgb(200,200,200)";
 						break;
 					case ANS1:
 						context.fillStyle = "red";
