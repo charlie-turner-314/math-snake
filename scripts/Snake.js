@@ -46,7 +46,9 @@ PAUSE=4,
 KEYLEFT=37, 
 KEYUP=38,
 KEYRIGHT=39,
-KEYDOWN=40;
+KEYDOWN=40,
+KEYP=80,
+KEYESC=27;
 
 
 var windowSize = {
@@ -110,6 +112,9 @@ function Update(){
 	}
 	if (keyState[KEYDOWN] && snakeDirection !== UP) {
 		snakeDirection = DOWN;
+	}
+	if (keyState[KEYP] || keyState[KEYESC]) {
+		snakeDirection = PAUSE;
 	}
 	
 	if(frames % speed === 0){
