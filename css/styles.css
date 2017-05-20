@@ -5,7 +5,7 @@
 @font-face { font-family: Quicksand Regular; src: url(../fonts/Quicksand-Regular.otf); }
 @font-face { font-family: Quicksand Bold; src: url(../fonts/Quicksand-Bold.otf); }
 body {
-	background-color: gold;
+	background-color: rgb(200,200,200);
 }
 canvas {
 	padding: 0;
