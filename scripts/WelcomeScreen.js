@@ -9,14 +9,16 @@ cellSize,
 operations,
 numberRange,
 increaseFactor,
-difficulty;
+difficulty,
+growthInc;
 
-function DiffChoose(s, c, o, n, d){
+function DiffChoose(s, c, o, n, d, g){
 	speed = s;
 	cellSize = c;
 	operations = o;
 	numberRange = n;
 	difficulty = d;
+	growthInc = g;
 	SaveSettings();
 	window.location.href = 'app.html'
 }
@@ -29,7 +31,8 @@ function SaveSettings(){
 		'operations' : operations,
 		'numberRange' : numberRange,
 		'increaseFactor' : increaseFactor,
-		'difficulty' : difficulty
+		'difficulty' : difficulty,
+		'growthInc' : growthInc
 		}
 	localStorage.setItem("saveSnake", JSON.stringify(saveSnake));
 }  

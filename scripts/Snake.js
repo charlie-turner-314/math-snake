@@ -7,7 +7,8 @@ cellSize=20, //size of cells (pixels)
 speed=5,    // speed of game (1 is super fast --- higher is slower)
 operations=2, // types of questions
 numberRange=50, // range of numbers to do math
-difficulty="UNKNOWN";  //number indicating current difficulty
+difficulty="UNKNOWN",  //number indicating current difficulty
+growthInc=5;
 
 var
 canvas,  //The canvas
@@ -20,6 +21,8 @@ COLS,
 answerNum,
 frames,
 score,
+feeding,
+gotFood,
 // Displayed multiple choice answers
 choice1,
 choice2,
@@ -74,6 +77,7 @@ function Main() { // starts game, main function to create the game canvas and al
 	});
 	frames=0;
 	Init();
+	Loop();
 }
 
 function Init(){
@@ -84,7 +88,6 @@ function Init(){
 	GridSet(1, 1, SNAKE); 
 	SetFood();
 	GenerateAnswer();
-	Loop();
 }
 
 function Loop(){
@@ -143,13 +146,11 @@ function Update(){
 		// restart if you run into the wall
 		if(	0 > nx || nx > COLS-1 || 0 > ny || ny > ROWS-1){
 			alert("You hit the wall. Replay?");
-			//location.reload();
 			return Init();
 			}
 		// restart if you run into yourself
 		if(GridGet(nx, ny) === SNAKE){
 			alert("You ate yourself. Sad snake :(")
-			//location.reload();
 			return Init();
 		}
 		// takes the value of the new head position 
@@ -157,60 +158,75 @@ function Update(){
 			case ANS1:
 				if(choice1 == answer){             	// If correct answer
 					var snakeTail = {x:nx, y:ny};  	// snakeTail = the point of the answer cell
+					gotFood = 1
 					score++;			// Increase score
 					ResetFoods();			// Reset food
 					GenerateAnswer();		// Generate answers
 					SetFood();			// Setfood
 				} else {				// NOT CORRECT
 					alert("Oh, no. That's the wrong answer." + question + " = " + answer + ". Replay?")
-					//location.reload();		// RELOAD PAGE (DEAD SNAKE DAMN)
-					return Init();
+					return Init();      // Restart game
 				}
 				break;
 			case ANS2:
 				if(choice2 == answer){
 					var snakeTail = {x:nx, y:ny};
+					gotFood = 1
 					score++;
 					ResetFoods();
 					GenerateAnswer();
 					SetFood();
 				}else{
 					alert("Snake doesn't feel well. It could have grown big and strong if you went to " + answer + ", Replay?")
-					//location.reload();
 					return Init();
 				}
 				break;
 			case ANS3:
 				if(choice3 == answer){
 					var snakeTail = {x:nx, y:ny};
+					gotFood = 1
 					score++;
 					ResetFoods();
 					GenerateAnswer();
 					SetFood();
 				}else{
 					alert("Bad luck, that's the wrong answer. Replay?")
-					//location.reload();
 					return Init();
 				}
 				break;
 			case ANS4:
 				if(choice4 == answer){
 					var snakeTail = {x:nx, y:ny};
+					gotFood = 1
 					score++;
 					ResetFoods();
 					GenerateAnswer();
 					SetFood();
 				}else{
 					alert("You ate the wrong food. The right answer was " + answer + ", Replay?")
-					//location.reload();
 					return Init();
 				}
 				break;
 			default:   		//if not anything special
+				if(gotFood===1){
+					feeding++
+					if(feeding < growthInc){
+						var snakeTail = {x:nx, y:ny};
+						score++
+					} else {
+						feeding = 0
+						gotFood = 0
+						var snakeTail = SnakeRemove();		 //take tail
+						GridSet(snakeTail.x, snakeTail.y, EMPTY);	// set its position EMPTY
+						snakeTail.x = nx;			// put tail at new head position
+						snakeTail.y = ny;			//--------------------------------
+					}
+				} else{
 				var snakeTail = SnakeRemove();		 //take tail
 				GridSet(snakeTail.x, snakeTail.y, EMPTY);	// set its position EMPTY
 				snakeTail.x = nx;			// put tail at new head position
 				snakeTail.y = ny;			//--------------------------------
+				}
 				break;
 		}
 		document.getElementById("score").innerHTML = score;     //display score
@@ -219,49 +235,49 @@ function Update(){
 	}
 }
 
-var grid = []; //Array --> holds x and y values
+var grid; //Array --> holds x and y values
 
 function GridInit(){
-	grid = [];
-	COLS = (canvas.width / cellSize);
+	grid = [];  // define and clear grid 
+	COLS = (canvas.width / cellSize); 
 	ROWS = (canvas.height / cellSize);
 	for (var x=0; x < COLS; x++) {
-			grid.push([]);
+			grid.push([]);   // push an array into each collumn
 			for (var y=0; y < ROWS; y++) {
-				grid[x].push(EMPTY);
+				grid[x].push(EMPTY); // set value of each to EMPTY
 			}
 	}
 	
 }
 function GridGet(x, y){
-	return grid[x][y];
+	return grid[x][y];  // simply return the value (SNAKE, EMPTY, ANS1 etc..)
 }
 function GridSet(x, y, val){
-	grid[x][y] = val;
+	grid[x][y] = val;   // Set the value of a given cell
 }
 function GridRemove(x, y){
-	grid[x][y] = EMPTY;
+	grid[x][y] = EMPTY; // remove any 'special' type of cell (reset given cell to EMPTY)
 }
 
-var snake = [];
+var snake;  
 var snakeDirection;
 var snakeLast;
 function SnakeInit(d, x, y){
-	snakeDirection = d;
-	snake = [];
-	SnakeAdd(x,y);
+	snakeDirection = d;  // exactly what it looks like
+	snake = [];  // clear snake array 
+	SnakeAdd(x,y);  // add an element to the snake array at the given x and y
 }
 
 function SnakeAdd(x,y){
-	snake.unshift({x:x, y:y});
-	snakeLast = snake[0];
+	snake.unshift({x:x, y:y});  //place element at start of snake array
+	snakeLast = snake[0];  // set the variable to the last element of the array
 }
 
 function SnakeRemove(){
 	return snake.pop();  // return the last element of the snake
 }
 
-function ResetFoods(){
+function ResetFoods(){  // remove the 4 'food' items
 	GridRemove(ans1Pos.x, ans1Pos.y);
 	GridRemove(ans2Pos.x, ans2Pos.y);
 	GridRemove(ans3Pos.x, ans3Pos.y);
@@ -273,11 +289,11 @@ var ans1Pos, ans2Pos, ans3Pos, ans4Pos;
 
 
 function SetFood(){
-	var emptyCells = [];
-	for(var x=0; x < COLS; x++){
-		for(var y=0; y < ROWS; y++){
-			if(GridGet(x, y) === EMPTY){
-				emptyCells.push({x:x, y:y});
+	var emptyCells = [];  
+	for(var x=0; x < COLS; x++){      	//--Scan all collums and all rows
+		for(var y=0; y < ROWS; y++){	//^^^^^^^^^^
+			if(GridGet(x, y) === EMPTY){ //if the cell is EMPTY
+				emptyCells.push({x:x, y:y});  // add the x and y value of cell to empty cell array
 			}
 		}
 	}
@@ -412,6 +428,7 @@ function LoadSettings(){
 		if(typeof settings.numberRange !== "undefined") numberRange = settings.numberRange;
 		if(typeof settings.increaseFactor !== "undefined") increaseFactor = settings.increaseFactor;
 		if(typeof settings.difficulty !== "undefined") difficulty = settings.difficulty;
+		if(typeof settings.growthInc !== "undefined") growthInc = settings.growthInc;
 	}
 	if(difficulty == 7) difficulty = "SNAKE MASTER"
 	document.getElementById("difficulty").innerHTML = difficulty;
