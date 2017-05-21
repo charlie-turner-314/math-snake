@@ -143,13 +143,14 @@ function Update(){
 		// restart if you run into the wall
 		if(	0 > nx || nx > COLS-1 || 0 > ny || ny > ROWS-1){
 			alert("You hit the wall. Replay?");
-			location.reload();
-			//return Init();
+			//location.reload();
+			return Init();
 			}
 		// restart if you run into yourself
 		if(GridGet(nx, ny) === SNAKE){
 			alert("You ate yourself. Sad snake :(")
-			location.reload();
+			//location.reload();
+			return Init();
 		}
 		// takes the value of the new head position 
 		switch(GridGet(nx, ny)){
@@ -162,8 +163,8 @@ function Update(){
 					SetFood();			// Setfood
 				} else {				// NOT CORRECT
 					alert("Oh, no. That's the wrong answer." + question + " = " + answer + ". Replay?")
-					location.reload();		// RELOAD PAGE (DEAD SNAKE DAMN)
-					//return Init();
+					//location.reload();		// RELOAD PAGE (DEAD SNAKE DAMN)
+					return Init();
 				}
 				break;
 			case ANS2:
@@ -175,8 +176,8 @@ function Update(){
 					SetFood();
 				}else{
 					alert("Snake doesn't feel well. It could have grown big and strong if you went to " + answer + ", Replay?")
-					location.reload();
-					//return Init();
+					//location.reload();
+					return Init();
 				}
 				break;
 			case ANS3:
@@ -188,8 +189,8 @@ function Update(){
 					SetFood();
 				}else{
 					alert("Bad luck, that's the wrong answer. Replay?")
-					location.reload();
-					//return Init();
+					//location.reload();
+					return Init();
 				}
 				break;
 			case ANS4:
@@ -201,8 +202,8 @@ function Update(){
 					SetFood();
 				}else{
 					alert("You ate the wrong food. The right answer was " + answer + ", Replay?")
-					location.reload();
-					//return Init();
+					//location.reload();
+					return Init();
 				}
 				break;
 			default:   		//if not anything special
