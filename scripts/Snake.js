@@ -21,8 +21,8 @@ COLS,
 answerNum,
 frames,
 score,
-feeding,
-gotFood,
+feeding = 0,
+gotFood = 0,
 // Displayed multiple choice answers
 choice1,
 choice2,
@@ -51,7 +51,8 @@ KEYUP=38,
 KEYRIGHT=39,
 KEYDOWN=40,
 KEYP=80,
-KEYESC=27;
+KEYESC=27,
+KEYSPACE=32;
 
 
 var windowSize = {
@@ -105,19 +106,27 @@ function Update(){
 		document.getElementById("question").innerHTML = question;
 	}
 	
-	if (keyState[KEYLEFT] && snakeDirection !== RIGHT) {
+	if (keyState[KEYLEFT] && snake.length === 1) {
+		snakeDirection = LEFT;
+	}else if (keyState[KEYLEFT] && snakeDirection !== RIGHT) {
 		snakeDirection = LEFT;
 	}
-	if (keyState[KEYUP] && snakeDirection !== DOWN) {
+	if (keyState[KEYUP] && snake.length === 1) {
+		snakeDirection = UP;
+	}else if (keyState[KEYUP] && snakeDirection !== DOWN) {
 		snakeDirection = UP;
 	}
-	if (keyState[KEYRIGHT] && snakeDirection !== LEFT) {
+	if (keyState[KEYRIGHT] && snake.length === 1) {
+		snakeDirection = RIGHT;
+	}else if (keyState[KEYRIGHT] && snakeDirection !== LEFT) {
 		snakeDirection = RIGHT;
 	}
-	if (keyState[KEYDOWN] && snakeDirection !== UP) {
+	if (keyState[KEYDOWN] && snake.length === 1) {
+		snakeDirection = DOWN;
+	}else if (keyState[KEYDOWN] && snakeDirection !== UP) {
 		snakeDirection = DOWN;
 	}
-	if (keyState[KEYP] || keyState[KEYESC]) {
+	if (keyState[KEYP] || keyState[KEYESC] || keyState[KEYSPACE]) {
 		snakeDirection = PAUSE;
 	}
 	
@@ -163,11 +172,11 @@ function Update(){
 					var snakeTail = {x:nx, y:ny};  	// snakeTail = the point of the answer cell
 					gotFood = 1
 					score++;			// Increase score
-					ResetFoods();			// Reset food
-					GenerateAnswer();		// Generate answers
+					ResetFoods();		// Reset food
+					GenerateAnswer();	// Generate answers
 					SetFood();			// Setfood
-				} else {				// NOT CORRECT
-					alert("Oh, no. That's the wrong answer." + question + " = " + answer + ". Replay?")
+				} else {					// NOT CORRECT
+					alert("Oh, no. That's the wrong answer. The correct answer was" + answer + ". Replay?")
 					return Init();      // Restart game
 				}
 				break;
@@ -331,8 +340,6 @@ function Draw(){
 						break;
 					case SNAKE:
 						context.fillStyle = "rgb(200,200,200)";
-						context.strokeStyle = "rgb(50,50,50)";
-						context.strokeRect(x*cellSize, y*cellSize, cellSize, cellSize);
 						break;
 					case ANS1:
 						context.fillStyle = "red";
