@@ -65,7 +65,8 @@ function Main() { // starts game, main function to create the game canvas and al
 	canvas.width = Math.floor((windowSize.width - 50)/cellSize) * cellSize;
 	canvas.height = Math.floor((windowSize.height - 100)/cellSize) * cellSize;
 	context = canvas.getContext("2d");
-	document.body.appendChild(canvas);	
+	document.body.appendChild(canvas);
+	context.lineWidth = 3;	
 	context.fillStyle = "rgb(166,52,52)";
 	context.fillRect(0, 0, canvas.width, canvas.height);
 	keyState = {};
@@ -145,11 +146,13 @@ function Update(){
 		
 		// restart if you run into the wall
 		if(	0 > nx || nx > COLS-1 || 0 > ny || ny > ROWS-1){
+			snakeDirection = PAUSE;
 			alert("You hit the wall. Replay?");
 			return Init();
 			}
 		// restart if you run into yourself
 		if(GridGet(nx, ny) === SNAKE){
+			snakeDirection = PAUSE;
 			alert("You ate yourself. Sad snake :(")
 			return Init();
 		}
@@ -328,6 +331,8 @@ function Draw(){
 						break;
 					case SNAKE:
 						context.fillStyle = "rgb(200,200,200)";
+						context.strokeStyle = "rgb(50,50,50)";
+						context.strokeRect(x*cellSize, y*cellSize, cellSize, cellSize);
 						break;
 					case ANS1:
 						context.fillStyle = "red";
