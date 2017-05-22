@@ -21,6 +21,7 @@ COLS,
 answerNum,
 frames,
 score,
+playing,
 feeding = 0,
 gotFood = 0,
 // Displayed multiple choice answers
@@ -29,6 +30,7 @@ choice2,
 choice3,
 choice4,
 score,
+goMessage,
 
 // Cell types
 EMPTY=0,
@@ -77,12 +79,12 @@ function Main() { // starts game, main function to create the game canvas and al
 	document.addEventListener("keyup", function(evt){
 		delete keyState[evt.keyCode];
 	});
-	frames=0;
 	Init();
 	Loop();
 }
 
 function Init(){
+	playing = true;
 	frames = 0;
 	score = 1;
 	GridInit();
@@ -154,16 +156,20 @@ function Update(){
 		}
 		
 		// restart if you run into the wall
-		if(	0 > nx || nx > COLS-1 || 0 > ny || ny > ROWS-1){
-			snakeDirection = PAUSE;
-			alert("You hit the wall. Replay?");
-			return Init();
+			if(	0 > nx || nx > COLS-1 || 0 > ny || ny > ROWS-1){
+				if(playing){
+				playing = false;
+				goMessage = "you hit the wall";
+				return GameOver();
+				}
 			}
 		// restart if you run into yourself
 		if(GridGet(nx, ny) === SNAKE){
-			snakeDirection = PAUSE;
-			alert("You ate yourself. Sad snake :(")
-			return Init();
+			if(playing){
+			playing = false;
+			goMessage = "you ate yourself";
+			return GameOver();
+			}
 		}
 		// takes the value of the new head position 
 		switch(GridGet(nx, ny)){
@@ -176,8 +182,9 @@ function Update(){
 					GenerateAnswer();	// Generate answers
 					SetFood();			// Setfood
 				} else {					// NOT CORRECT
-					alert("Oh, no. That's the wrong answer. The correct answer was" + answer + ". Replay?")
-					return Init();      // Restart game
+					playing = false;
+					goMessage = "the correct answer was " + answer;
+					return GameOver();
 				}
 				break;
 			case ANS2:
@@ -189,8 +196,9 @@ function Update(){
 					GenerateAnswer();
 					SetFood();
 				}else{
-					alert("Snake doesn't feel well. It could have grown big and strong if you went to " + answer + ", Replay?")
-					return Init();
+					playing = false;
+					goMessage = "the correct answer was " + answer;
+					return GameOver();
 				}
 				break;
 			case ANS3:
@@ -202,8 +210,9 @@ function Update(){
 					GenerateAnswer();
 					SetFood();
 				}else{
-					alert("Bad luck, that's the wrong answer. Replay?")
-					return Init();
+					playing = false;
+					goMessage = "the correct answer was " + answer;
+					return GameOver();
 				}
 				break;
 			case ANS4:
@@ -215,8 +224,9 @@ function Update(){
 					GenerateAnswer();
 					SetFood();
 				}else{
-					alert("You ate the wrong food. The right answer was " + answer + ", Replay?")
-					return Init();
+					playing = false;
+					goMessage = "the correct answer was " + answer;
+					return GameOver();
 				}
 				break;
 			default:   		//if not anything special
@@ -245,6 +255,31 @@ function Update(){
 		SnakeAdd(snakeTail.x, snakeTail.y);			//add new position to snake array
 		GridSet(nx, ny, SNAKE);					//set new position to SNAKE
 	}
+}
+
+
+function GameOver(){
+	ResetFoods();
+	snakeDirection = PAUSE;
+	document.getElementById("gameOver").style.opacity = 1;
+	document.getElementById("gameOver").style.pointerEvents = "auto";
+	document.getElementById("goMessage").innerHTML = goMessage;
+	document.getElementById("finalLength").innerHTML = snake.length;
+}
+
+function PlayAgain(){
+	HideGO();
+	Init();
+}
+
+function ChangeDiff(){
+	window.location.href = 'index.html'
+}
+
+
+function HideGO(){
+	document.getElementById("gameOver").style.opacity = 0;
+	document.getElementById("gameOver").style.pointerEvents = "none";
 }
 
 var grid; //Array --> holds x and y values

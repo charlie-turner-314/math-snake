@@ -4,9 +4,12 @@
 @font-face { font-family: Nexa Bold; src: url(../fonts/Nexa%20Bold.ttf); }
 @font-face { font-family: Quicksand Regular; src: url(../fonts/Quicksand-Regular.otf); }
 @font-face { font-family: Quicksand Bold; src: url(../fonts/Quicksand-Bold.otf); }
+
+
 body {
 	background-color: rgb(200,200,200);
 }
+
 canvas {
 	padding: 0;
     margin: auto;
@@ -125,3 +128,57 @@ canvas {
     text-decoration:none;
 }
 
+#gameOver {
+	position:fixed;
+	width: 75%;
+	left: 50%;
+	top:38%;
+	margin-left: -37.5%;
+	text-align:center;
+	color:white;
+	opacity:0;
+	z-index:9999;
+	pointer-events:none;
+	transition:2s;
+}
+
+#goMessage {
+	font-family: Nexa Bold;
+	font-size: 50px;
+}
+
+#goLengthLabel {
+	font-family: Quicksand Regular;
+	font-size: 20px;
+}
+
+#finalLength {
+	font-family: 'Open Sans', sans-serif; 
+}
+
+#goBtns {
+    margin: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#restartBtn {
+	border: 2px solid white;
+	background-color: rgba(0,0,0,0);
+	font-family: Nexa Light;
+	font-size: 20px;
+	color:white;
+	width:200px;
+	height:75px;
+}
+
+#changeDiffBtn {
+	border: 2px solid white;
+	background-color: rgba(0,0,0,0);
+	font-family: Nexa Light;
+	font-size: 20px;
+	color:white;
+	width:200px;
+	height:75px;
+}

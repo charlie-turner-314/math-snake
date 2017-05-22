@@ -1,32 +1,42 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>MathSnake</title>
-<link rel="icon" href="favicon.ico">
-</head>
-<link rel="stylesheet" href="css/styles.css">
-<script src="scripts/Snake.js"></script>
-<body onload="Main()">
- <div id="divQuestion" style="text-align:center; line-height:5px;">
-    <span id="question">10 X 4</span>
- </div> 
- <div class="divMultipleChoiceBox">
- 	<div id="a1Box"></div>
-    <div id="a2Box"></div>
-    <div id="a3Box"></div>
-    <div id="a4Box"></div>
- </div>
- <div class="divMultipleChoiceAns">
- <div id="a1"></div>
- <div id="a2"></div>
- <div id="a3"></div>
- <div id="a4"></div>
- </div>
- <div id="divScore">
- Length: <span id="score">1</span></div>
-<div id="footer">
-<a id="home" href="index.html">DIFFICULTY: <span id="difficulty">3</span></a>
-</div>
-</body>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="css/styles.css">
+		<title>MathSnake</title>
+		<link rel="icon" href="favicon.ico">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	</head>
+	<body id="body" onload="Main()">
+			<div id="divQuestion" style="text-align:center; line-height:5px;">
+			    <span id="question">10 X 4</span>
+			</div> 
+			<div class="divMultipleChoiceBox">
+			 	<div id="a1Box"></div>
+			    <div id="a2Box"></div>
+			    <div id="a3Box"></div>
+			    <div id="a4Box"></div>
+			</div>
+			<div class="divMultipleChoiceAns">
+			<div id="a1"></div>
+			<div id="a2"></div>
+			<div id="a3"></div>
+			<div id="a4"></div>
+			</div>
+			<div id="divScore">Length: <span id="score">1</span></div>
+			<div id="gameOver">
+				<div id="goMessage">you hit the wall</div>
+				<div id="goLengthLabel">your final length was</div>
+				<div id="finalLength" style="font-size:80px">11</div>
+				<div id="goBtns">
+				<button id="restartBtn" onclick="PlayAgain()">Play Again</button>
+				<button id="changeDiffBtn" onclick="ChangeDiff()">Change Difficulty</button>
+				</div>
+			</div>
+
+			<div id="footer">
+			<a id="home" href="index.html">DIFFICULTY: <span id="difficulty">3</span></a>
+			</div>
+	</body>
+	<script src="scripts/Snake.js"></script>
 </html>
