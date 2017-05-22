@@ -108,6 +108,7 @@ function Update(){
 		document.getElementById("question").innerHTML = question;
 	}
 	
+	if(playing){
 	if (keyState[KEYLEFT] && snake.length === 1) {
 		snakeDirection = LEFT;
 	}else if (keyState[KEYLEFT] && snakeDirection !== RIGHT) {
@@ -127,6 +128,7 @@ function Update(){
 		snakeDirection = DOWN;
 	}else if (keyState[KEYDOWN] && snakeDirection !== UP) {
 		snakeDirection = DOWN;
+	}
 	}
 	if (keyState[KEYP] || keyState[KEYESC] || keyState[KEYSPACE]) {
 		snakeDirection = PAUSE;
