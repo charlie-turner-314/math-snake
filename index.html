@@ -12,6 +12,8 @@
 body{
 	background-color: rgb(39,39,34);
 	color: rgb(200,200,200);
+	transition:2s;
+	opacity:0;
 }
 
 h3 {
@@ -57,7 +59,7 @@ h3 {
 </style>
 <script src="scripts/WelcomeScreen.js"></script>
 
-<body>
+<body id="body" onload="LoadPage()">
 <h1 style="font-family:Nexa Bold; text-align:center;">Welcome To MathSnake - Learn While Having Fun!</h1>
 <h2 style="font-family:Nexa Light; text-align:center;">Select Difficulty To Begin</h2>
 <br>

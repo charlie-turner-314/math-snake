@@ -12,6 +12,10 @@ increaseFactor,
 difficulty,
 growthInc;
 
+function LoadPage(){
+	document.getElementById("body").style.opacity = 1;
+}
+
 function DiffChoose(s, c, o, n, d, g){
 	speed = s;
 	cellSize = c;

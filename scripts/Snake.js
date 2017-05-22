@@ -75,6 +75,7 @@ function Main() { // starts game, main function to create the game canvas and al
 	keyState = {};
 	document.addEventListener("keydown", function(evt){
 		keyState[evt.keyCode] = true;
+		playing=true;
 	});
 	document.addEventListener("keyup", function(evt){
 		delete keyState[evt.keyCode];
@@ -84,7 +85,7 @@ function Main() { // starts game, main function to create the game canvas and al
 }
 
 function Init(){
-	playing = true;
+	playing = false;
 	frames = 0;
 	score = 1;
 	GridInit();
@@ -103,12 +104,13 @@ function Loop(){
 function Update(){
 	frames++;
 	if(snakeDirection == PAUSE) {
+		if(playing){document.getElementById("paused").style.opacity = 1;}
 		document.getElementById("question").innerHTML = "Use Arrow Keys To Move Snake";
 	}else{
 		document.getElementById("question").innerHTML = question;
+		document.getElementById("paused").style.opacity = 0;
 	}
-	
-	if(playing){
+if(playing){
 	if (keyState[KEYLEFT] && snake.length === 1) {
 		snakeDirection = LEFT;
 	}else if (keyState[KEYLEFT] && snakeDirection !== RIGHT) {
@@ -129,10 +131,11 @@ function Update(){
 	}else if (keyState[KEYDOWN] && snakeDirection !== UP) {
 		snakeDirection = DOWN;
 	}
-	}
+}
 	if (keyState[KEYP] || keyState[KEYESC] || keyState[KEYSPACE]) {
 		snakeDirection = PAUSE;
 	}
+
 	
 	if(frames % speed === 0){
 		// Get new x and new y
@@ -166,8 +169,8 @@ function Update(){
 				}
 			}
 		// restart if you run into yourself
-		if(GridGet(nx, ny) === SNAKE){
-			if(playing){
+		if(playing){
+			if(GridGet(nx, ny) === SNAKE){
 			playing = false;
 			goMessage = "you ate yourself";
 			return GameOver();

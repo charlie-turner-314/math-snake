@@ -128,6 +128,25 @@ canvas {
     text-decoration:none;
 }
 
+#paused {
+	position:fixed;
+	width: 75%;
+	left: 50%;
+	top:48%;
+	margin-left: -37.5%;
+	text-align:center;
+	color:white;
+	opacity:0;
+	z-index:999;
+	pointer-events:none;
+	transition:1s;
+}
+
+#pausedMsg{
+	font-family: Quicksand Bold;
+	font-size:60px;
+}
+
 #gameOver {
 	position:fixed;
 	width: 75%;
