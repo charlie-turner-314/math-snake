@@ -171,6 +171,7 @@ canvas {
 	color:white;
 	width:200px;
 	height:75px;
+	transition: 0.5s;
 }
 
 #changeDiffBtn {
@@ -181,4 +182,13 @@ canvas {
 	color:white;
 	width:200px;
 	height:75px;
+	transition: 0.5s;
+}
+
+#restartBtn:hover {
+	background-color: rgba(0,0,0,0.5)
+}
+
+#changeDiffBtn:hover {
+	background-color: rgba(0,0,0,0.5)
 }
