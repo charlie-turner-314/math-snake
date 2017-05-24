@@ -74,8 +74,7 @@ function Main() { // starts game, main function to create the game canvas and al
 	context.fillRect(0, 0, canvas.width, canvas.height);
 	keyState = {};
 	document.addEventListener("keydown", function(evt){
-		keyState[evt.keyCode] = true;
-		playing=true;
+		keyState[evt.keyCode] = true;  
 	});
 	document.addEventListener("keyup", function(evt){
 		delete keyState[evt.keyCode];
@@ -85,7 +84,11 @@ function Main() { // starts game, main function to create the game canvas and al
 }
 
 function Init(){
-	playing = false;
+	console.log("init");
+	document.getElementById("paused").innerHTML = "Use Arrow Keys To Move Snake";
+	document.getElementById("paused").style.fontFamily = "Quicksand Bold";
+	document.getElementById("paused").style.fontSize = "60px";
+	playing = true;
 	frames = 0;
 	score = 1;
 	GridInit();
@@ -110,30 +113,34 @@ function Update(){
 		document.getElementById("question").innerHTML = question;
 		document.getElementById("paused").style.opacity = 0;
 	}
-if(playing){
-	if (keyState[KEYLEFT] && snake.length === 1) {
-		snakeDirection = LEFT;
-	}else if (keyState[KEYLEFT] && snakeDirection !== RIGHT) {
-		snakeDirection = LEFT;
-	}
-	if (keyState[KEYUP] && snake.length === 1) {
-		snakeDirection = UP;
-	}else if (keyState[KEYUP] && snakeDirection !== DOWN) {
-		snakeDirection = UP;
-	}
-	if (keyState[KEYRIGHT] && snake.length === 1) {
-		snakeDirection = RIGHT;
-	}else if (keyState[KEYRIGHT] && snakeDirection !== LEFT) {
-		snakeDirection = RIGHT;
-	}
-	if (keyState[KEYDOWN] && snake.length === 1) {
-		snakeDirection = DOWN;
-	}else if (keyState[KEYDOWN] && snakeDirection !== UP) {
-		snakeDirection = DOWN;
-	}
-}
-	if (keyState[KEYP] || keyState[KEYESC] || keyState[KEYSPACE]) {
-		snakeDirection = PAUSE;
+
+	if(playing){
+		if (keyState[KEYLEFT] && snake.length === 1) {
+			snakeDirection = LEFT;
+		}else if (keyState[KEYLEFT] && snakeDirection !== RIGHT) {
+			snakeDirection = LEFT;
+		}
+		if (keyState[KEYUP] && snake.length === 1) {
+			snakeDirection = UP;
+		}else if (keyState[KEYUP] && snakeDirection !== DOWN) {
+			snakeDirection = UP;
+		}
+		if (keyState[KEYRIGHT] && snake.length === 1) {
+			snakeDirection = RIGHT;
+		}else if (keyState[KEYRIGHT] && snakeDirection !== LEFT) {
+			snakeDirection = RIGHT;
+		}
+		if (keyState[KEYDOWN] && snake.length === 1) {
+			snakeDirection = DOWN;
+		}else if (keyState[KEYDOWN] && snakeDirection !== UP) {
+			snakeDirection = DOWN;
+		}
+		if (keyState[KEYP] || keyState[KEYESC] || keyState[KEYSPACE]) {
+			snakeDirection = PAUSE;
+			document.getElementById("paused").innerHTML = "Paused";
+			document.getElementById("paused").style.fontFamily = "Quicksand Bold";
+			document.getElementById("paused").style.fontSize = "60px";
+		}
 	}
 
 	
@@ -141,7 +148,6 @@ if(playing){
 		// Get new x and new y
 		var nx = snakeLast.x;
 		var ny = snakeLast.y;
-		
 		// change the new head position based on direction 
 		switch(snakeDirection){
 			case LEFT:
@@ -162,20 +168,16 @@ if(playing){
 		
 		// restart if you run into the wall
 			if(	0 > nx || nx > COLS-1 || 0 > ny || ny > ROWS-1){
-				if(playing){
 				playing = false;
 				goMessage = "you hit the wall";
 				return GameOver();
 				}
-			}
 		// restart if you run into yourself
-		if(playing){
 			if(GridGet(nx, ny) === SNAKE){
 			playing = false;
 			goMessage = "you ate yourself";
 			return GameOver();
 			}
-		}
 		// takes the value of the new head position 
 		switch(GridGet(nx, ny)){
 			case ANS1:
@@ -187,6 +189,7 @@ if(playing){
 					GenerateAnswer();	// Generate answers
 					SetFood();			// Setfood
 				} else {					// NOT CORRECT
+					var snakeTail = {x:nx, y:ny};  	// snakeTail = the point of the answer cell
 					playing = false;
 					goMessage = "the correct answer was " + answer;
 					return GameOver();
@@ -255,7 +258,7 @@ if(playing){
 				snakeTail.y = ny;			//--------------------------------
 				}
 				break;
-		}
+			}
 		document.getElementById("score").innerHTML = score;     //display score
 		SnakeAdd(snakeTail.x, snakeTail.y);			//add new position to snake array
 		GridSet(nx, ny, SNAKE);					//set new position to SNAKE
@@ -273,8 +276,11 @@ function GameOver(){
 }
 
 function PlayAgain(){
+	if(!playing){
+	console.log("PlayAgain");
 	HideGO();
 	Init();
+	}
 }
 
 function ChangeDiff(){
