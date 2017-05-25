@@ -8,6 +8,8 @@
 
 body {
 	background-color: rgb(200,200,200);
+	opacity: 0;
+	transition: 1s;
 }
 
 canvas {
@@ -139,7 +141,7 @@ canvas {
 	opacity:0;
 	z-index:999;
 	pointer-events:none;
-	transition:1s;
+	transition:0.5s;
 }
 
 #pausedMsg{
@@ -158,7 +160,7 @@ canvas {
 	opacity:0;
 	z-index:9999;
 	pointer-events:none;
-	transition:2s;
+	transition:1s;
 }
 
 #goMessage {

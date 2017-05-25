@@ -1,5 +1,8 @@
 // JavaScript Document
-
+// Fade in on load
+function LoadPage(){
+	document.getElementById("body").style.opacity = 1;
+}
 
 //Settings
 var 
@@ -52,6 +55,10 @@ KEYLEFT=37,
 KEYUP=38,
 KEYRIGHT=39,
 KEYDOWN=40,
+KEYA=65,
+KEYW=87,
+KEYD=68,
+KEYS=83,
 KEYP=80,
 KEYESC=27,
 KEYSPACE=32;
@@ -107,30 +114,34 @@ function Loop(){
 function Update(){
 	frames++;
 	if(snakeDirection == PAUSE) {
-		if(playing){document.getElementById("paused").style.opacity = 1;}
-		document.getElementById("question").innerHTML = "Use Arrow Keys To Move Snake";
+		if(playing){
+			document.getElementById("paused").style.opacity = 1;
+			document.getElementById("question").innerHTML = "Use Arrow Keys To Move Snake";
+		}else{
+			document.getElementById("question").innerHTML = question;
+		}
 	}else{
 		document.getElementById("question").innerHTML = question;
 		document.getElementById("paused").style.opacity = 0;
 	}
 
 	if(playing){
-		if (keyState[KEYLEFT] && snake.length === 1) {
+		if ((keyState[KEYLEFT] || keyState[KEYA])&& snake.length === 1) {
 			snakeDirection = LEFT;
 		}else if (keyState[KEYLEFT] && snakeDirection !== RIGHT) {
 			snakeDirection = LEFT;
 		}
-		if (keyState[KEYUP] && snake.length === 1) {
+		if ((keyState[KEYUP] || keyState[KEYW]) && snake.length === 1) {
 			snakeDirection = UP;
 		}else if (keyState[KEYUP] && snakeDirection !== DOWN) {
 			snakeDirection = UP;
 		}
-		if (keyState[KEYRIGHT] && snake.length === 1) {
+		if ((keyState[KEYRIGHT] || keyState[KEYD]) && snake.length === 1) {
 			snakeDirection = RIGHT;
 		}else if (keyState[KEYRIGHT] && snakeDirection !== LEFT) {
 			snakeDirection = RIGHT;
 		}
-		if (keyState[KEYDOWN] && snake.length === 1) {
+		if ((keyState[KEYDOWN] || keyState[KEYS]) && snake.length === 1) {
 			snakeDirection = DOWN;
 		}else if (keyState[KEYDOWN] && snakeDirection !== UP) {
 			snakeDirection = DOWN;
