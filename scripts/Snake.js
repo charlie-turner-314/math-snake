@@ -27,6 +27,7 @@ score,
 playing,
 feeding = 0,
 gotFood = 0,
+movingDirection,
 // Displayed multiple choice answers
 choice1,
 choice2,
@@ -91,7 +92,6 @@ function Main() { // starts game, main function to create the game canvas and al
 }
 
 function Init(){
-	console.log("init");
 	document.getElementById("paused").innerHTML = "Use Arrow Keys To Move Snake";
 	document.getElementById("paused").style.fontFamily = "Quicksand Bold";
 	document.getElementById("paused").style.fontSize = "60px";
@@ -113,37 +113,40 @@ function Loop(){
 
 function Update(){
 	frames++;
+
 	if(snakeDirection == PAUSE) {
 		if(playing){
 			document.getElementById("paused").style.opacity = 1;
-			document.getElementById("question").innerHTML = "Use Arrow Keys To Move Snake";
-		}else{
+			document.getElementById("question").style.opacity = 0;
+		}else{ //if not playing but paused
 			document.getElementById("question").innerHTML = question;
-		}
-	}else{
+			document.getElementById("question").style.opacity = 1;
+		} 
+	}else{ 
 		document.getElementById("question").innerHTML = question;
 		document.getElementById("paused").style.opacity = 0;
+		document.getElementById("question").style.opacity = 1;
 	}
 
 	if(playing){
-		if ((keyState[KEYLEFT] || keyState[KEYA])&& snake.length === 1) {
+		if ((keyState[KEYLEFT] || keyState[KEYA]) && snake.length === 1) {
 			snakeDirection = LEFT;
-		}else if (keyState[KEYLEFT] && snakeDirection !== RIGHT) {
+		}else if (keyState[KEYLEFT] && movingDirection !== RIGHT) {
 			snakeDirection = LEFT;
 		}
 		if ((keyState[KEYUP] || keyState[KEYW]) && snake.length === 1) {
 			snakeDirection = UP;
-		}else if (keyState[KEYUP] && snakeDirection !== DOWN) {
+		}else if (keyState[KEYUP] && movingDirection !== DOWN) {
 			snakeDirection = UP;
 		}
 		if ((keyState[KEYRIGHT] || keyState[KEYD]) && snake.length === 1) {
 			snakeDirection = RIGHT;
-		}else if (keyState[KEYRIGHT] && snakeDirection !== LEFT) {
+		}else if (keyState[KEYRIGHT] && movingDirection !== LEFT) {
 			snakeDirection = RIGHT;
 		}
 		if ((keyState[KEYDOWN] || keyState[KEYS]) && snake.length === 1) {
 			snakeDirection = DOWN;
-		}else if (keyState[KEYDOWN] && snakeDirection !== UP) {
+		}else if (keyState[KEYDOWN] && movingDirection !== UP) {
 			snakeDirection = DOWN;
 		}
 		if (keyState[KEYP] || keyState[KEYESC] || keyState[KEYSPACE]) {
@@ -156,6 +159,7 @@ function Update(){
 
 	
 	if(frames % speed === 0){
+		movingDirection = snakeDirection;
 		// Get new x and new y
 		var nx = snakeLast.x;
 		var ny = snakeLast.y;
@@ -288,7 +292,6 @@ function GameOver(){
 
 function PlayAgain(){
 	if(!playing){
-	console.log("PlayAgain");
 	HideGO();
 	Init();
 	}
@@ -491,7 +494,7 @@ function GenerateAnswer() { 											// generates the question and answer and 
 function LoadSettings(){
 	if(localStorage.getItem("saveSnake") !== null){
 		var settings = JSON.parse(localStorage.getItem("saveSnake"));
-		if (typeof settings.speed !== "undefined") speed = settings.speed;
+		if(typeof settings.speed !== "undefined") speed = settings.speed;
 		if(typeof settings.cellSize !== "undefined") cellSize = settings.cellSize;
 		if(typeof settings.operations !== "undefined") operations = settings.operations;
 		if(typeof settings.numberRange !== "undefined") numberRange = settings.numberRange;
