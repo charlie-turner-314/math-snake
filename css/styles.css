@@ -216,7 +216,7 @@ canvas {
 }
 
 
-/*
+
 #shop{
 	width:30%;
 	height:50%;
@@ -226,10 +226,8 @@ canvas {
 	margin-left: -37.5%;
 	text-align:center;
 	background-color:rgba(0,0,0,0.6);
-	opacity:1;
 	z-index:99;
-	pointer-events:none;
 	transition:1s;
 }
-*/
+
 
