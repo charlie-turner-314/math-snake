@@ -64,6 +64,12 @@ KEYP=80,
 KEYESC=27,
 KEYSPACE=32;
 
+function SpeedUp(){
+	if(speed !== 1){
+	speed--
+	}
+}
+
 
 var windowSize = {
 	width : window.innerWidth || document.documentElement.clientWidth,
@@ -421,7 +427,7 @@ function Draw(){
 
 var n1, n2, answer, question, answerNum;
 
-function GenerateAnswer() { 											// generates the question and answer and displays on top of page
+function GenerateAnswer() { 										// generates the question and answer and displays on top of page
 	n1 = Math.floor((Math.random() * numberRange) + 1);
 	n2 = Math.floor((Math.random() * numberRange) + 1);
 	
