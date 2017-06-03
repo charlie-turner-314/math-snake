@@ -137,22 +137,22 @@ function Update(){
 	if(playing){
 		if ((keyState[KEYLEFT] || keyState[KEYA]) && snake.length === 1) {
 			snakeDirection = LEFT;
-		}else if (keyState[KEYLEFT] && movingDirection !== RIGHT) {
+		}else if ((keyState[KEYLEFT] || keyState[KEYA]) && movingDirection !== RIGHT) {
 			snakeDirection = LEFT;
 		}
 		if ((keyState[KEYUP] || keyState[KEYW]) && snake.length === 1) {
 			snakeDirection = UP;
-		}else if (keyState[KEYUP] && movingDirection !== DOWN) {
+		}else if ((keyState[KEYUP] || keyState[KEYW]) && movingDirection !== DOWN) {
 			snakeDirection = UP;
 		}
 		if ((keyState[KEYRIGHT] || keyState[KEYD]) && snake.length === 1) {
 			snakeDirection = RIGHT;
-		}else if (keyState[KEYRIGHT] && movingDirection !== LEFT) {
+		}else if ((keyState[KEYRIGHT] || keyState[KEYD]) && movingDirection !== LEFT) {
 			snakeDirection = RIGHT;
 		}
 		if ((keyState[KEYDOWN] || keyState[KEYS]) && snake.length === 1) {
 			snakeDirection = DOWN;
-		}else if (keyState[KEYDOWN] && movingDirection !== UP) {
+		}else if ((keyState[KEYDOWN] || keyState[KEYS]) && movingDirection !== UP) {
 			snakeDirection = DOWN;
 		}
 		if (keyState[KEYP] || keyState[KEYESC] || keyState[KEYSPACE]) {
