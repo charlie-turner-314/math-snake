@@ -184,12 +184,12 @@ canvas {
 
 #goMessage {
 	font-family: Nexa Bold;
-	font-size: 4vw;
+	font-size: 3vw;
 }
 
 #goLengthLabel {
 	font-family: Quicksand Regular;
-	font-size: 1.6vw;
+	font-size: 1.5vw;
 }
 
 #finalLength {
@@ -210,8 +210,8 @@ canvas {
 	font-family: Nexa Light;
 	font-size: 1.5vw;
 	color:white;
-	width:15vw;
-	height:5vw;
+	width:14vw;
+	height:4.5vw;
 	transition: 0.5s;
 }
 
