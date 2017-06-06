@@ -22,6 +22,7 @@ canvas {
     bottom: 0;
     left: 0;
     right: 0;
+    opacity: 1;
 	}
 #divQuestion {
 	font-family: Quicksand Bold;
@@ -112,11 +113,29 @@ canvas {
     margin-right: -35%;	
 	font-family: Nexa Bold;
 }
+
+#scores{
+	width:100%;
+	padding:0;
+	margin:0;
+	margin-top: 50px;
+	height:20px;
+}
+
 #divScore{
 	margin-top:40px;
 	margin-left:20px;
-	font-family:Quicksand Bold;
+	font-family:Nexa Bold;
 }
+
+#divTotalLength{
+	text-align:right;
+	margin-top: -20px;
+	margin-right:20px;
+	font-family:Nexa Bold;
+}
+
+
 #footer {
 	font-family: Nexa Bold;
 	text-align: center;
@@ -146,14 +165,14 @@ canvas {
 
 #pausedMsg{
 	font-family: Quicksand Bold;
-	font-size:60px;
+	font-size:5vw;
 }
 
 #gameOver {
 	position:fixed;
 	width: 75%;
 	left: 50%;
-	top:38%;
+	top:28%;
 	margin-left: -37.5%;
 	text-align:center;
 	color:white;
@@ -165,16 +184,17 @@ canvas {
 
 #goMessage {
 	font-family: Nexa Bold;
-	font-size: 50px;
+	font-size: 4vw;
 }
 
 #goLengthLabel {
 	font-family: Quicksand Regular;
-	font-size: 20px;
+	font-size: 1.6vw;
 }
 
 #finalLength {
 	font-family: 'Open Sans', sans-serif; 
+	font-size: 6vw;
 }
 
 #goBtns {
@@ -184,50 +204,39 @@ canvas {
     bottom: 0;
 }
 
-#restartBtn {
+#changeDiffBtn, #restartBtn, #shopBtn {
 	border: 2px solid white;
 	background-color: rgba(0,0,0,0);
 	font-family: Nexa Light;
-	font-size: 20px;
+	font-size: 1.5vw;
 	color:white;
-	width:200px;
-	height:75px;
+	width:15vw;
+	height:5vw;
 	transition: 0.5s;
 }
 
-#changeDiffBtn {
-	border: 2px solid white;
-	background-color: rgba(0,0,0,0);
-	font-family: Nexa Light;
-	font-size: 20px;
-	color:white;
-	width:200px;
-	height:75px;
-	transition: 0.5s;
-}
-
-#restartBtn:hover {
-	background-color: rgba(0,0,0,0.5)
-}
-
-#changeDiffBtn:hover {
-	background-color: rgba(0,0,0,0.5)
-	
+#shopBtn{
+	margin-top: 4px;
 }
 
 
+#changeDiffBtn:hover, #restartBtn:hover, #shopBtn:hover{
+	background-color: rgba(0,0,0,0.6)
+}
 
 #shop{
-	width:30%;
-	height:50%;
 	position:fixed;
-	left: 73%;
-	top:25%;
-	margin-left: -37.5%;
-	text-align:center;
-	background-color:rgba(0,0,0,0.6);
-	z-index:99;
-	transition:1s;
+	z-index: 5555;
+	width: 50%;
+	height: 50%;
+	top: 50%;
+	left: 50%;
+	margin-left:-25%;
+	margin-top:-10%;
+	background-color: rgba(0,0,0,0.8);
+	transition:2s;
+	opacity:0;
+	pointer-events: 0;
 }
 
 

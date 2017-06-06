@@ -11,7 +11,8 @@ speed=5,    // speed of game (1 is super fast --- higher is slower)
 operations=2, // types of questions
 numberRange=50, // range of numbers to do math
 difficulty="UNKNOWN",  //number indicating current difficulty
-growthInc=5;
+growthInc=5,
+totalLength=1;
 
 var
 canvas,  //The canvas
@@ -25,6 +26,7 @@ answerNum,
 frames,
 score,
 playing,
+shopOpen = false,
 feeding = 0,
 gotFood = 0,
 movingDirection,
@@ -98,12 +100,14 @@ function Main() { // starts game, main function to create the game canvas and al
 }
 
 function Init(){
+	document.getElementById("totalLength").innerHTML = totalLength;
 	document.getElementById("paused").innerHTML = "Use Arrow Keys To Move Snake";
 	document.getElementById("paused").style.fontFamily = "Quicksand Bold";
-	document.getElementById("paused").style.fontSize = "60px";
+	document.getElementById("paused").style.fontSize = "5vw";
 	playing = true;
 	frames = 0;
 	score = 1;
+	totalLength++;
 	GridInit();
 	SnakeInit(PAUSE, 1, 1);
 	GridSet(1, 1, SNAKE); 
@@ -206,6 +210,7 @@ function Update(){
 					var snakeTail = {x:nx, y:ny};  	// snakeTail = the point of the answer cell
 					gotFood = 1
 					score++;			// Increase score
+					totalLength++;
 					ResetFoods();		// Reset food
 					GenerateAnswer();	// Generate answers
 					SetFood();			// Setfood
@@ -221,6 +226,7 @@ function Update(){
 					var snakeTail = {x:nx, y:ny};
 					gotFood = 1
 					score++;
+					totalLength++;
 					ResetFoods();
 					GenerateAnswer();
 					SetFood();
@@ -235,6 +241,7 @@ function Update(){
 					var snakeTail = {x:nx, y:ny};
 					gotFood = 1
 					score++;
+					totalLength++;
 					ResetFoods();
 					GenerateAnswer();
 					SetFood();
@@ -249,6 +256,7 @@ function Update(){
 					var snakeTail = {x:nx, y:ny};
 					gotFood = 1
 					score++;
+					totalLength++;
 					ResetFoods();
 					GenerateAnswer();
 					SetFood();
@@ -264,6 +272,7 @@ function Update(){
 					if(feeding < growthInc){
 						var snakeTail = {x:nx, y:ny};
 						score++
+						totalLength++;
 					} else {
 						feeding = 0
 						gotFood = 0
@@ -281,6 +290,8 @@ function Update(){
 				break;
 			}
 		document.getElementById("score").innerHTML = score;     //display score
+		document.getElementById("totalLength").innerHTML = totalLength; // display total length
+		localStorage.setItem("totalLength", totalLength);
 		SnakeAdd(snakeTail.x, snakeTail.y);			//add new position to snake array
 		GridSet(nx, ny, SNAKE);					//set new position to SNAKE
 	}
@@ -300,6 +311,20 @@ function PlayAgain(){
 	if(!playing){
 	HideGO();
 	Init();
+	}
+}
+
+function OpenShop(){
+	var shop = document.getElementById("shop");
+	HideGO();
+	if(!shopOpen){
+		shopOpen = true;
+		shop.style.opacity = 1;
+		shop.style.pointerEvents = "auto";
+	}else{
+		shopOpen = false;
+		shop.style.opacity = 0;
+		shop.style.pointerEvents = "none";
 	}
 }
 
@@ -508,6 +533,14 @@ function LoadSettings(){
 		if(typeof settings.difficulty !== "undefined") difficulty = settings.difficulty;
 		if(typeof settings.growthInc !== "undefined") growthInc = settings.growthInc;
 	}
+
+		var tLengthStore = localStorage.getItem("totalLength")
+		if(tLengthStore !== null){
+		totalLength = Number(tLengthStore)
+		} else{
+			totalLength = 1
+		}
+
 	if(difficulty == 7) difficulty = "SNAKE MASTER"
 	document.getElementById("difficulty").innerHTML = difficulty;
 }

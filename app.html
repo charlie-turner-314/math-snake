@@ -23,18 +23,28 @@
 			<div id="a3"></div>
 			<div id="a4"></div>
 			</div>
-			<div id="divScore">Length: <span id="score">1</span></div>
+			<div id="scores">
+				<div id="divScore">Length: <span id="score">1</span></div>
+				<div id="divTotalLength">Length Money: <span id="totalLength">5</span></div>
+			</div>
 			<div id="paused">
 				<div id="pausedMsg">Use Arrow Keys To Move</div>
 			</div>
 			<div id="gameOver">
 				<div id="goMessage">you hit the wall</div>
 				<div id="goLengthLabel">your final length was</div>
-				<div id="finalLength" style="font-size:80px">11</div>
+				<div id="finalLength">11</div>
 				<div id="goBtns">
 				<button id="restartBtn" onclick="PlayAgain()">Play Again</button>
 				<button id="changeDiffBtn" onclick="ChangeDiff()">Change Difficulty</button>
+				<br>
+				<button id="shopBtn" onclick="OpenShop()">Store</button>
 				</div>
+			</div>
+
+			<div id="shop">
+				<h1 style="text-align:center; color:white; font-family: Nexa Bold;">MathSnake Shop</h1>
+				<p style="text-align:center; color:white; font-family: Nexa Bold;">Coming Soon...</p>
 			</div>
 
 			<div id="shop" style="opacity:0; pointer-events: none;">
