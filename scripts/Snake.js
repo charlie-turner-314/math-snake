@@ -16,13 +16,13 @@ operations=2, // types of questions
 numberRange=50, // range of numbers to do math
 difficulty="UNKNOWN",  //number indicating current difficulty
 growthInc=5,
-totalLength=1,
+coins=1,
 gameColor = "rgb(50,50,50)",
 backColor = "rgb(200,200,200)",
 snakeColor = "rgb(200,200,200)",
 magicSnakeColor = 0,  	//------------
 magicBackColor = 0,		//0: not baught, 1: disabled, 2:enabled
-magicGameColor = 0		//------------
+magicGameColor = 0;		//------------
 
 var
 canvas,  //The canvas
@@ -112,14 +112,14 @@ function Main() { // starts game, main function to create the game canvas and al
 }
 
 function Init(){
-	document.getElementById("totalLength").innerHTML = totalLength;
+	document.getElementById("coins").innerHTML = coins;
 	document.getElementById("pausedMsg").innerHTML = "Use Arrow Keys To Move Snake";
 	document.getElementById("pausedMsg").style.fontFamily = "Quicksand Bold";
 	document.getElementById("pausedMsg").style.fontSize = "5vw";
 	playing = true;
 	frames = 0;
 	score = 1;
-	totalLength++;
+	coins++;
 	GridInit();
 	SnakeInit(PAUSE, 1, 1);
 	GridSet(1, 1, SNAKE); 
@@ -135,7 +135,7 @@ function Loop(){
 
 function Update(){
 	frames++;
-	document.getElementById("totalLength").innerHTML = totalLength;
+	document.getElementById("coins").innerHTML = coins;
 	if(snakeDirection == PAUSE) {
 		if(playing){
 			if(!shopOpen){
@@ -227,7 +227,7 @@ function Update(){
 					var snakeTail = {x:nx, y:ny};  	// snakeTail = the point of the answer cell
 					gotFood = 1
 					score++;			// Increase score
-					totalLength++;
+					coins++;
 					if(magicSnakeColor == 2){RndSnakeColor()}
 					ResetFoods();		// Reset food
 					GenerateAnswer();	// Generate answers
@@ -244,7 +244,7 @@ function Update(){
 					var snakeTail = {x:nx, y:ny};
 					gotFood = 1
 					score++;
-					totalLength++;
+					coins++;
 					if(magicSnakeColor == 2){RndSnakeColor()}
 					ResetFoods();
 					GenerateAnswer();
@@ -260,7 +260,7 @@ function Update(){
 					var snakeTail = {x:nx, y:ny};
 					gotFood = 1
 					score++;
-					totalLength++;
+					coins++;
 					if(magicSnakeColor == 2){RndSnakeColor()}
 					ResetFoods();
 					GenerateAnswer();
@@ -276,7 +276,7 @@ function Update(){
 					var snakeTail = {x:nx, y:ny};
 					gotFood = 1
 					score++;
-					totalLength++;
+					coins++;
 					if(magicSnakeColor == 2){RndSnakeColor()}
 					ResetFoods();
 					GenerateAnswer();
@@ -293,7 +293,7 @@ function Update(){
 					if(feeding < growthInc){
 						var snakeTail = {x:nx, y:ny};
 						score++
-						totalLength++;
+						coins++;
 					} else {
 						feeding = 0
 						gotFood = 0
@@ -311,8 +311,8 @@ function Update(){
 				break;
 			}
 		document.getElementById("score").innerHTML = score;     //display score
-		document.getElementById("totalLength").innerHTML = totalLength; // display total length
-		localStorage.setItem("totalLength", totalLength);
+		document.getElementById("coins").innerHTML = coins; // display total length
+		localStorage.setItem("coins", coins);
 		SnakeAdd(snakeTail.x, snakeTail.y);			//add new position to snake array
 		GridSet(nx, ny, SNAKE);					//set new position to SNAKE
 	}
@@ -548,40 +548,40 @@ function GenerateAnswer() { 										// generates the question and answer and d
 } 																// END FUNCTION GENERATE ANSWER 
 
 function RndSnakeColor(){
-	if(totalLength > 30){
+	if(coins > 30){
 		var r, g, b;
 		r = Math.floor((Math.random()*255)+1);
 		g = Math.floor((Math.random()*255)+1);
 		b = Math.floor((Math.random()*255)+1);	
 		snakeColor = "rgb(" + r + "," + g +"," + b + ")";
-		totalLength -= 30;
+		coins -= 30;
 	}else{
 		alert("It looks like you don't have enough money :( Get coins by playing!");
 	}
 }
 
 function RndBackColor(){
-	if(totalLength > 30){
+	if(coins > 30){
 		var r, g, b;
 		r = Math.floor((Math.random()*255)+1);
 		g = Math.floor((Math.random()*255)+1);
 		b = Math.floor((Math.random()*255)+1);	
 		backColor = "rgb(" + r + "," + g +"," + b + ")";
 		document.getElementById("body").style.backgroundColor = backColor;
-		totalLength -= 30;
+		coins -= 30;
 	}else{
 		alert("It looks like you don't have enough money :( Get coins by playing!");
 	}
 }
 
 function RndGameColor(){
-	if(totalLength >= 30){
+	if(coins >= 30){
 		var r, g, b;
 		r = Math.floor((Math.random()*255)+1);
 		g = Math.floor((Math.random()*255)+1);
 		b = Math.floor((Math.random()*255)+1);	
 		gameColor = "rgb(" + r + "," + g +"," + b + ")";
-		totalLength -= 30;
+		coins -= 30;
 	}else{
 		alert("It looks like you don't have enough money :( Get coins by playing!");
 	}
@@ -589,8 +589,8 @@ function RndGameColor(){
 
 function MagicSnakeColor(){
 	if(magicSnakeColor == 0){
-		if(totalLength >= 200){
-			totalLength -= 200;
+		if(coins >= 200){
+			coins -= 200;
 			magicSnakeColor = 2;
 			document.getElementById("magicSnakeLbl").innerHTML = "Click To Disable";
 		}else{alert("It looks like you don't have enough money :( Get coins by playing!")}
@@ -629,11 +629,11 @@ function LoadSettings(){
 	if(difficulty == 7) difficulty = "SNAKE MASTER"
 	document.getElementById("difficulty").innerHTML = difficulty;
 
-		var tLengthStore = localStorage.getItem("totalLength")
+		var tLengthStore = localStorage.getItem("coins")
 		if(tLengthStore !== null){
-		totalLength = Number(tLengthStore)
+		coins = Number(tLengthStore)
 		} else{
-			totalLength = 0
+			coins = 0
 		}
 
 	if(localStorage.getItem("gameColors") !== null){
@@ -657,6 +657,6 @@ function LoadSettings(){
 }
 
 function ResetAll(){
-	localStorage.removeItem("totalLength");
+	localStorage.removeItem("coins");
 	localStorage.removeItem("gameColors");
 }
