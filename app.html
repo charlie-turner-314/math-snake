@@ -25,10 +25,11 @@
 			</div>
 			<div id="scores">
 				<div id="divScore">Length: <span id="score">1</span></div>
-				<div id="divTotalLength">All Time Length: <span id="totalLength">5</span></div>
+				<div id="divTotalLength">Coins: <span id="totalLength">5</span></div>
 			</div>
 			<div id="paused">
-				<div id="pausedMsg">Use Arrow Keys To Move</div>
+				<div id="pausedMsg">Use Arrow Keys To Move Snake</div>
+				<button id="pausedShopBtn" onclick="OpenShop(); Unfocus()">Store</button>
 			</div>
 			<div id="gameOver">
 				<div id="goMessage">you hit the wall</div>
@@ -38,22 +39,41 @@
 				<button id="restartBtn" onclick="PlayAgain()">Play Again</button>
 				<button id="changeDiffBtn" onclick="ChangeDiff()">Change Difficulty</button>
 				<br>
-				<button id="shopBtn" onclick="OpenShop()">Store</button>
+				<button id="shopBtn" onclick="OpenShop(); Unfocus()">Store</button>
 				</div>
 			</div>
 
 			<div id="shop">
-				<h1 style="text-align:center; color:white; font-family: Nexa Bold;">MathSnake Shop</h1>
-				<p style="text-align:center; color:white; font-family: Nexa Bold;">Coming Soon...</p>
-			</div>
-
-			<div id="shop" style="opacity:0; pointer-events: none;">
-				<
+				<h1 style="margin:0; margin-top:5px; margin-bottom:0px; text-align:center; color:white; font-family: Nexa Bold;">MathSnake Shop</h1>
+				<p style="margin-top:0px; text-align:center; color:white; font-family: Nexa Bold;">For The Ultimate Experience</p>
+				<div class="shopItemsR1">
+					<div>
+						<button id="rndSnakeColorBtn" onclick="RndSnakeColor(); Unfocus(); SaveColors();">
+							<h1 style="font-size:1vw; font-family:Moon Bold">Random Snake Color</h1>
+							<p style="font-size:0.8vw;font-family:Moon Light">30 Coins</p>
+						</button>
+					</div>
+					<div>
+						<button id="rndBackColorBtn" onclick="RndBackColor(); Unfocus(); SaveColors();">
+							<h1 style="font-size:1vw; font-family:Moon Bold">Random Back Color</h1>
+							<p style="font-size:0.8vw;font-family:Moon Light">30 Coins</p>
+						</button>
+					</div>
+					<div>
+						<button id="rndGameColorBtn" onclick="RndGameColor(); Unfocus(); SaveColors();">
+							<h1 style="font-size:1vw; font-family:Moon Bold">Random Game Color</h1>
+							<p style="font-size:0.8vw;font-family:Moon Light">30 Coins</p>
+						</button>
+					</div>
+				</div>
+				<br>
+				<button id="shopCloseBtn" onclick="Unfocus(); OpenShop(); PlayAgain();">Close</button>
 			</div>
 
 			<div id="footer">
 			<a id="home" href="index.html">DIFFICULTY: <span id="difficulty">3</span></a>
 			</div>
+			<button id="noUse" onclick="console.log('nothing has been achieved')">No Reason</button>
 	</body>
 	<script src="scripts/Snake.js"></script>
 </html>

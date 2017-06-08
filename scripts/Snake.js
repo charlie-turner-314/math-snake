@@ -1,7 +1,12 @@
 // JavaScript Document
+
 // Fade in on load
 function LoadPage(){
 	document.getElementById("body").style.opacity = 1;
+}
+
+function Unfocus(){
+	document.getElementById("noUse").focus();
 }
 
 //Settings
@@ -12,13 +17,15 @@ operations=2, // types of questions
 numberRange=50, // range of numbers to do math
 difficulty="UNKNOWN",  //number indicating current difficulty
 growthInc=5,
-totalLength=1;
+totalLength=1,
+gameColor = "rgb(50,50,50)",
+backColor = "rgb(200,200,200)",
+snakeColor = "rgb(200,200,200)";
 
 var
 canvas,  //The canvas
 context, // 2d rendering context
 keyState, //
-
 ROWS,
 COLS,
 
@@ -80,6 +87,7 @@ var windowSize = {
 
 function Main() { // starts game, main function to create the game canvas and all the other cool stuff that only needs to be done once
 	LoadSettings();
+	document.getElementById("body").style.backgroundColor = backColor;
 	canvas = document.createElement("canvas");  //Create canvas
 	canvas.width = Math.floor((windowSize.width - 50)/cellSize) * cellSize;
 	canvas.height = Math.floor((windowSize.height - 100)/cellSize) * cellSize;
@@ -101,9 +109,9 @@ function Main() { // starts game, main function to create the game canvas and al
 
 function Init(){
 	document.getElementById("totalLength").innerHTML = totalLength;
-	document.getElementById("paused").innerHTML = "Use Arrow Keys To Move Snake";
-	document.getElementById("paused").style.fontFamily = "Quicksand Bold";
-	document.getElementById("paused").style.fontSize = "5vw";
+	document.getElementById("pausedMsg").innerHTML = "Use Arrow Keys To Move Snake";
+	document.getElementById("pausedMsg").style.fontFamily = "Quicksand Bold";
+	document.getElementById("pausedMsg").style.fontSize = "5vw";
 	playing = true;
 	frames = 0;
 	score = 1;
@@ -123,10 +131,13 @@ function Loop(){
 
 function Update(){
 	frames++;
-
+	document.getElementById("totalLength").innerHTML = totalLength;
 	if(snakeDirection == PAUSE) {
 		if(playing){
+			if(!shopOpen){
 			document.getElementById("paused").style.opacity = 1;
+			document.getElementById("paused").style.pointerEvents = "auto";
+			}
 			document.getElementById("question").style.opacity = 0;
 		}else{ //if not playing but paused
 			document.getElementById("question").innerHTML = question;
@@ -135,6 +146,8 @@ function Update(){
 	}else{ 
 		document.getElementById("question").innerHTML = question;
 		document.getElementById("paused").style.opacity = 0;
+		document.getElementById("shop").style.opacity = 0;
+		shopOpen = false;
 		document.getElementById("question").style.opacity = 1;
 	}
 
@@ -161,9 +174,9 @@ function Update(){
 		}
 		if (keyState[KEYP] || keyState[KEYESC] || keyState[KEYSPACE]) {
 			snakeDirection = PAUSE;
-			document.getElementById("paused").innerHTML = "Paused";
-			document.getElementById("paused").style.fontFamily = "Quicksand Bold";
-			document.getElementById("paused").style.fontSize = "60px";
+			document.getElementById("pausedMsg").innerHTML = "Paused";
+			document.getElementById("pausedMsg").style.fontFamily = "Quicksand Bold";
+			document.getElementById("pausedMsg").style.fontSize = "5vw";
 		}
 	}
 
@@ -301,6 +314,8 @@ function Update(){
 function GameOver(){
 	ResetFoods();
 	snakeDirection = PAUSE;
+	gotFood=0;
+	feeding=0;
 	document.getElementById("gameOver").style.opacity = 1;
 	document.getElementById("gameOver").style.pointerEvents = "auto";
 	document.getElementById("goMessage").innerHTML = goMessage;
@@ -316,15 +331,19 @@ function PlayAgain(){
 
 function OpenShop(){
 	var shop = document.getElementById("shop");
+	document.getElementById("paused").style.opacity = 0;
+	document.getElementById("paused").style.pointerEvents = "none";
 	HideGO();
-	if(!shopOpen){
-		shopOpen = true;
-		shop.style.opacity = 1;
-		shop.style.pointerEvents = "auto";
-	}else{
-		shopOpen = false;
-		shop.style.opacity = 0;
-		shop.style.pointerEvents = "none";
+	if(!keyState[KEYSPACE]){
+		if(!shopOpen){
+			shopOpen = true;
+			shop.style.opacity = 1;
+			shop.style.pointerEvents = "auto";
+		}else{
+			shopOpen = false;
+			shop.style.opacity = 0;
+			shop.style.pointerEvents = "none";
+		}
 	}
 }
 
@@ -427,10 +446,10 @@ function Draw(){
 		for(var y=0; y < ROWS; y++){
 			switch(GridGet(x, y)){
 					case EMPTY:
-						context.fillStyle = "rgb(50,50,50)";
+						context.fillStyle = gameColor;
 						break;
 					case SNAKE:
-						context.fillStyle = "rgb(200,200,200)";
+						context.fillStyle = snakeColor;
 						break;
 					case ANS1:
 						context.fillStyle = "red";
@@ -522,6 +541,56 @@ function GenerateAnswer() { 										// generates the question and answer and d
 	choice4 = document.getElementById("a4").innerHTML; 
 } 																// END FUNCTION GENERATE ANSWER 
 
+function RndSnakeColor(){
+	if(totalLength > 30){
+		var r, g, b;
+		r = Math.floor((Math.random()*255)+1);
+		g = Math.floor((Math.random()*255)+1);
+		b = Math.floor((Math.random()*255)+1);	
+		snakeColor = "rgb(" + r + "," + g +"," + b + ")";
+		totalLength -= 30;
+	}else{
+		alert("you dont have the moneys");
+	}
+}
+
+function RndBackColor(){
+	if(totalLength > 30){
+		var r, g, b;
+		r = Math.floor((Math.random()*255)+1);
+		g = Math.floor((Math.random()*255)+1);
+		b = Math.floor((Math.random()*255)+1);	
+		backColor = "rgb(" + r + "," + g +"," + b + ")";
+		document.getElementById("body").style.backgroundColor = backColor;
+		totalLength -= 30;
+	}else{
+		alert("you dont have the moneys");
+	}
+}
+
+function RndGameColor(){
+	if(totalLength > 30){
+		var r, g, b;
+		r = Math.floor((Math.random()*255)+1);
+		g = Math.floor((Math.random()*255)+1);
+		b = Math.floor((Math.random()*255)+1);	
+		gameColor = "rgb(" + r + "," + g +"," + b + ")";
+		totalLength -= 30;
+	}else{
+		alert("you dont have the moneys");
+	}
+}
+
+function SaveColors(){
+	var gameColors = {
+		'snakeColor' : snakeColor,
+		'backColor'  : backColor,
+		'gameColor'  : gameColor
+	}
+	localStorage.setItem("gameColors", JSON.stringify(gameColors));
+}
+
+
 function LoadSettings(){
 	if(localStorage.getItem("saveSnake") !== null){
 		var settings = JSON.parse(localStorage.getItem("saveSnake"));
@@ -540,6 +609,13 @@ function LoadSettings(){
 		} else{
 			totalLength = 1
 		}
+
+	if(localStorage.getItem("gameColors") !== null){
+		var gameColors = JSON.parse(localStorage.getItem("gameColors"));
+		if(typeof gameColors.snakeColor !== "undefined") snakeColor = gameColors.snakeColor;
+		if(typeof gameColors.backColor !== "undefined") backColor = gameColors.backColor;
+		if(typeof gameColors.gameColor !== "undefined") gameColor = gameColors.gameColor;
+	}
 
 	if(difficulty == 7) difficulty = "SNAKE MASTER"
 	document.getElementById("difficulty").innerHTML = difficulty;

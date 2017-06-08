@@ -4,7 +4,8 @@
 @font-face { font-family: Nexa Bold; src: url(../fonts/Nexa%20Bold.ttf); }
 @font-face { font-family: Quicksand Regular; src: url(../fonts/Quicksand-Regular.otf); }
 @font-face { font-family: Quicksand Bold; src: url(../fonts/Quicksand-Bold.otf); }
-
+@font-face { font-family: Moon Light; src: url(../fonts/Moon-Light.otf); }
+@font-face { font-family: Moon Bold; src: url(../fonts/Moon-Bold.otf); }
 
 body {
 	background-color: rgb(200,200,200);
@@ -24,6 +25,13 @@ canvas {
     right: 0;
     opacity: 1;
 	}
+#noUse{
+	opacity:0;
+	pointer-events: none;
+	position:fixed;
+	top:5px;
+}
+
 #divQuestion {
 	font-family: Quicksand Bold;
 	font-size:30px;
@@ -153,13 +161,12 @@ canvas {
 	position:fixed;
 	width: 75%;
 	left: 50%;
-	top:48%;
+	top:40%;
 	margin-left: -37.5%;
 	text-align:center;
 	color:white;
 	opacity:0;
-	z-index:999;
-	pointer-events:none;
+	z-index:9;
 	transition:0.5s;
 }
 
@@ -204,7 +211,7 @@ canvas {
     bottom: 0;
 }
 
-#changeDiffBtn, #restartBtn, #shopBtn {
+#changeDiffBtn, #restartBtn, #shopBtn, #pausedShopBtn{
 	border: 2px solid white;
 	background-color: rgba(0,0,0,0);
 	font-family: Nexa Light;
@@ -219,8 +226,7 @@ canvas {
 	margin-top: 4px;
 }
 
-
-#changeDiffBtn:hover, #restartBtn:hover, #shopBtn:hover{
+#changeDiffBtn:hover, #restartBtn:hover, #shopBtn:hover, #pausedShopBtn:hover{
 	background-color: rgba(0,0,0,0.6)
 }
 
@@ -234,9 +240,44 @@ canvas {
 	margin-left:-25%;
 	margin-top:-10%;
 	background-color: rgba(0,0,0,0.8);
-	transition:2s;
+	transition:0.5s;
 	opacity:0;
-	pointer-events: 0;
+	pointer-events: none;
 }
 
+#shopCloseBtn{
+	position:relative; 
+	font-family: Nexa Bold; 
+	left:50%; 
+	width: 100px; 
+	margin-left:-50px; 
+	color: white; 
+	border: 1px solid white; 
+	background-color: rgba(0,0,0,0);
+	transition: 0.5s;
+}
 
+#shopCloseBtn:hover {
+	background-color: rgba(255,255,255,0.8);
+	color:black;
+	border: 1px solid black;	
+}
+
+#rndSnakeColorBtn, #rndBackColorBtn, #rndGameColorBtn{
+	background-color: rgba(0,0,0,0);
+	color:white;
+	border: 1px solid white;
+	transition: 0.5s;
+}
+#rndSnakeColorBtn:hover, #rndBackColorBtn:hover, #rndGameColorBtn:hover {
+	background-color: rgba(255,255,255,0.8);
+	color:black;
+	border: 1px solid black;
+}
+
+.shopItemsR1 > div{
+    display: inline-block;
+    zoom: 1;
+    width: 32.9%;
+    text-align: center;
+}
