@@ -1,5 +1,4 @@
 // JavaScript Document
-
 // Fade in on load
 function LoadPage(){
 	document.getElementById("body").style.opacity = 1;
@@ -20,7 +19,10 @@ growthInc=5,
 totalLength=1,
 gameColor = "rgb(50,50,50)",
 backColor = "rgb(200,200,200)",
-snakeColor = "rgb(200,200,200)";
+snakeColor = "rgb(200,200,200)",
+magicSnakeColor = 0,  	//------------
+magicBackColor = 0,		//0: not baught, 1: disabled, 2:enabled
+magicGameColor = 0		//------------
 
 var
 canvas,  //The canvas
@@ -98,7 +100,9 @@ function Main() { // starts game, main function to create the game canvas and al
 	context.fillRect(0, 0, canvas.width, canvas.height);
 	keyState = {};
 	document.addEventListener("keydown", function(evt){
-		keyState[evt.keyCode] = true;  
+		if(!shopOpen){
+		keyState[evt.keyCode] = true; 
+		} 
 	});
 	document.addEventListener("keyup", function(evt){
 		delete keyState[evt.keyCode];
@@ -144,10 +148,10 @@ function Update(){
 			document.getElementById("question").style.opacity = 1;
 		} 
 	}else{ 
+		shopOpen = false;
 		document.getElementById("question").innerHTML = question;
 		document.getElementById("paused").style.opacity = 0;
 		document.getElementById("shop").style.opacity = 0;
-		shopOpen = false;
 		document.getElementById("question").style.opacity = 1;
 	}
 
@@ -224,6 +228,7 @@ function Update(){
 					gotFood = 1
 					score++;			// Increase score
 					totalLength++;
+					if(magicSnakeColor == 2){RndSnakeColor()}
 					ResetFoods();		// Reset food
 					GenerateAnswer();	// Generate answers
 					SetFood();			// Setfood
@@ -240,6 +245,7 @@ function Update(){
 					gotFood = 1
 					score++;
 					totalLength++;
+					if(magicSnakeColor == 2){RndSnakeColor()}
 					ResetFoods();
 					GenerateAnswer();
 					SetFood();
@@ -255,6 +261,7 @@ function Update(){
 					gotFood = 1
 					score++;
 					totalLength++;
+					if(magicSnakeColor == 2){RndSnakeColor()}
 					ResetFoods();
 					GenerateAnswer();
 					SetFood();
@@ -270,6 +277,7 @@ function Update(){
 					gotFood = 1
 					score++;
 					totalLength++;
+					if(magicSnakeColor == 2){RndSnakeColor()}
 					ResetFoods();
 					GenerateAnswer();
 					SetFood();
@@ -334,7 +342,6 @@ function OpenShop(){
 	document.getElementById("paused").style.opacity = 0;
 	document.getElementById("paused").style.pointerEvents = "none";
 	HideGO();
-	if(!keyState[KEYSPACE]){
 		if(!shopOpen){
 			shopOpen = true;
 			shop.style.opacity = 1;
@@ -344,7 +351,6 @@ function OpenShop(){
 			shop.style.opacity = 0;
 			shop.style.pointerEvents = "none";
 		}
-	}
 }
 
 function ChangeDiff(){
@@ -550,7 +556,7 @@ function RndSnakeColor(){
 		snakeColor = "rgb(" + r + "," + g +"," + b + ")";
 		totalLength -= 30;
 	}else{
-		alert("you dont have the moneys");
+		alert("It looks like you don't have enough money :( Get coins by playing!");
 	}
 }
 
@@ -564,12 +570,12 @@ function RndBackColor(){
 		document.getElementById("body").style.backgroundColor = backColor;
 		totalLength -= 30;
 	}else{
-		alert("you dont have the moneys");
+		alert("It looks like you don't have enough money :( Get coins by playing!");
 	}
 }
 
 function RndGameColor(){
-	if(totalLength > 30){
+	if(totalLength >= 30){
 		var r, g, b;
 		r = Math.floor((Math.random()*255)+1);
 		g = Math.floor((Math.random()*255)+1);
@@ -577,8 +583,26 @@ function RndGameColor(){
 		gameColor = "rgb(" + r + "," + g +"," + b + ")";
 		totalLength -= 30;
 	}else{
-		alert("you dont have the moneys");
+		alert("It looks like you don't have enough money :( Get coins by playing!");
 	}
+}
+
+function MagicSnakeColor(){
+	if(magicSnakeColor == 0){
+		if(totalLength >= 200){
+			totalLength -= 200;
+			magicSnakeColor = 2;
+			document.getElementById("magicSnakeLbl").innerHTML = "Click To Disable";
+		}else{alert("It looks like you don't have enough money :( Get coins by playing!")}
+	}else if(magicSnakeColor == 1){
+		magicSnakeColor = 2;
+		document.getElementById("magicSnakeLbl").innerHTML = "Click To Disable";
+	}else if(magicSnakeColor == 2){
+		magicSnakeColor = 1
+		document.getElementById("magicSnakeLbl").innerHTML = "Click To Enable";
+	}
+	SaveColors();
+	localStorage.setItem("magicSnakeColor", magicSnakeColor);
 }
 
 function SaveColors(){
@@ -589,7 +613,6 @@ function SaveColors(){
 	}
 	localStorage.setItem("gameColors", JSON.stringify(gameColors));
 }
-
 
 function LoadSettings(){
 	if(localStorage.getItem("saveSnake") !== null){
@@ -603,11 +626,14 @@ function LoadSettings(){
 		if(typeof settings.growthInc !== "undefined") growthInc = settings.growthInc;
 	}
 
+	if(difficulty == 7) difficulty = "SNAKE MASTER"
+	document.getElementById("difficulty").innerHTML = difficulty;
+
 		var tLengthStore = localStorage.getItem("totalLength")
 		if(tLengthStore !== null){
 		totalLength = Number(tLengthStore)
 		} else{
-			totalLength = 1
+			totalLength = 0
 		}
 
 	if(localStorage.getItem("gameColors") !== null){
@@ -617,6 +643,20 @@ function LoadSettings(){
 		if(typeof gameColors.gameColor !== "undefined") gameColor = gameColors.gameColor;
 	}
 
-	if(difficulty == 7) difficulty = "SNAKE MASTER"
-	document.getElementById("difficulty").innerHTML = difficulty;
+	var sMSC = localStorage.getItem("magicSnakeColor");
+	if(sMSC == 1){
+		magicSnakeColor = 1;
+		document.getElementById("magicSnakeLbl").innerHTML = "Click To Enable";
+	}else if(sMSC == 2){
+		magicSnakeColor = 2;
+		document.getElementById("magicSnakeLbl").innerHTML = "Click To Disable";
+	}else{
+		magicSnakeColor = 0;
+	}
+
+}
+
+function ResetAll(){
+	localStorage.removeItem("totalLength");
+	localStorage.removeItem("gameColors");
 }

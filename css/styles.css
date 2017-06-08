@@ -233,8 +233,8 @@ canvas {
 #shop{
 	position:fixed;
 	z-index: 5555;
-	width: 50%;
-	height: 50%;
+	width: 50vw;
+	height: 50vh;
 	top: 50%;
 	left: 50%;
 	margin-left:-25%;
@@ -245,19 +245,20 @@ canvas {
 	pointer-events: none;
 }
 
-#shopCloseBtn{
-	position:relative; 
+.shopFooter{
+	text-align: center;
+}
+
+#shopCloseBtn, #resetBtn{
 	font-family: Nexa Bold; 
-	left:50%; 
-	width: 100px; 
-	margin-left:-50px; 
+	width: 6.3vw; 
 	color: white; 
 	border: 1px solid white; 
 	background-color: rgba(0,0,0,0);
 	transition: 0.5s;
 }
 
-#shopCloseBtn:hover {
+#shopCloseBtn:hover, #resetBtn:hover {
 	background-color: rgba(255,255,255,0.8);
 	color:black;
 	border: 1px solid black;	
@@ -266,6 +267,7 @@ canvas {
 #rndSnakeColorBtn, #rndBackColorBtn, #rndGameColorBtn{
 	background-color: rgba(0,0,0,0);
 	color:white;
+	width:13vw;
 	border: 1px solid white;
 	transition: 0.5s;
 }
@@ -276,6 +278,27 @@ canvas {
 }
 
 .shopItemsR1 > div{
+    display: inline-block;
+    zoom: 1;
+    width: 32.9%;
+    text-align: center;
+}
+
+#magicSnakeColorBtn{
+	background-color: rgba(0,0,0,0);
+	color:white;
+	width: 13vw;
+	border: 1px solid white;
+	transition: 0.5s;
+}
+#magicSnakeColorBtn:hover {
+	background-color: rgba(255,255,255,0.8);
+	color:black;
+	border: 1px solid black;
+}
+
+
+.shopItemsR2 > div{
     display: inline-block;
     zoom: 1;
     width: 32.9%;
