@@ -20,9 +20,9 @@ coins=1,
 gameColor = "rgb(50,50,50)",
 backColor = "rgb(200,200,200)",
 snakeColor = "rgb(200,200,200)",
-magicSnakeColor = 0,  	//------------
+magicSnakeColor = 0,  	//------------ Not Available In Current Version
 magicBackColor = 0,		//0: not baught, 1: disabled, 2:enabled
-magicGameColor = 0;		//------------
+magicGameColor = 0;		//------------ Not Available In Current Version
 
 var
 canvas,  //The canvas
