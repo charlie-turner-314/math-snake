@@ -555,7 +555,11 @@ function GenerateAnswer() { 										// generates the question and answer and d
 } 																// END FUNCTION GENERATE ANSWER 
 
 function RndSnakeColor(){
+<<<<<<< HEAD
 	if(MagicSnakeColor == 0){
+=======
+	if(MagicSnakeColor = 0){
+>>>>>>> 59587ff06d1341e82fa9ca0237ebfa0afddc499b
 		if(coins > 30){
 			var r, g, b;
 			r = Math.floor((Math.random()*255)+1);
