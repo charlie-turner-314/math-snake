@@ -23,6 +23,7 @@ snakeColor = "rgb(200,200,200)",
 magicSnakeColor = 0,  	//------------ Not Available In Current Version
 magicBackColor = 0,		//0: not baught, 1: disabled, 2:enabled
 magicGameColor = 0;		//------------ Not Available In Current Version
+discoMode = false;
 
 var
 canvas,  //The canvas
@@ -89,6 +90,7 @@ var windowSize = {
 
 function Main() { // starts game, main function to create the game canvas and all the other cool stuff that only needs to be done once
 	LoadSettings();
+	console.log('%c Please no hacking thankyou! ', 'background: #222; color: #bada55; font-size:40px; font-family: Comic Sans MS');
 	document.getElementById("body").style.backgroundColor = backColor;
 	canvas = document.createElement("canvas");  //Create canvas
 	canvas.width = Math.floor((windowSize.width - 50)/cellSize) * cellSize;
@@ -183,8 +185,13 @@ function Update(){
 			document.getElementById("pausedMsg").style.fontSize = "5vw";
 		}
 	}
+	if(discoMode == 2){
+		if(frames % 100 === 0){
+			DiscoModeFree();
+		}
+	}
 
-	
+
 	if(frames % speed === 0){
 		movingDirection = snakeDirection;
 		// Get new x and new y
@@ -548,15 +555,24 @@ function GenerateAnswer() { 										// generates the question and answer and d
 } 																// END FUNCTION GENERATE ANSWER 
 
 function RndSnakeColor(){
-	if(coins > 30){
+	if(MagicSnakeColor == 0){
+		if(coins > 30){
+			var r, g, b;
+			r = Math.floor((Math.random()*255)+1);
+			g = Math.floor((Math.random()*255)+1);
+			b = Math.floor((Math.random()*255)+1);	
+			snakeColor = "rgb(" + r + "," + g +"," + b + ")";
+			coins -= 30;
+		}else{
+			alert("It looks like you don't have enough money :( Get coins by playing!");
+			console.log("RndSnakeColor")
+		}
+	}else{
 		var r, g, b;
 		r = Math.floor((Math.random()*255)+1);
 		g = Math.floor((Math.random()*255)+1);
 		b = Math.floor((Math.random()*255)+1);	
 		snakeColor = "rgb(" + r + "," + g +"," + b + ")";
-		coins -= 30;
-	}else{
-		alert("It looks like you don't have enough money :( Get coins by playing!");
 	}
 }
 
@@ -571,6 +587,7 @@ function RndBackColor(){
 		coins -= 30;
 	}else{
 		alert("It looks like you don't have enough money :( Get coins by playing!");
+		console.log("RndBackColor has run")
 	}
 }
 
@@ -584,6 +601,7 @@ function RndGameColor(){
 		coins -= 30;
 	}else{
 		alert("It looks like you don't have enough money :( Get coins by playing!");
+		console.log("RndGameColor has run")
 	}
 }
 
@@ -603,6 +621,43 @@ function MagicSnakeColor(){
 	}
 	SaveColors();
 	localStorage.setItem("magicSnakeColor", magicSnakeColor);
+}
+
+function DiscoModeFree(){
+	var r, g, b;
+		r = Math.floor((Math.random()*255)+1);
+		g = Math.floor((Math.random()*255)+1);
+		b = Math.floor((Math.random()*255)+1);	
+		gameColor = "rgb(" + r + "," + g +"," + b + ")";
+
+		r = Math.floor((Math.random()*255)+1);
+		g = Math.floor((Math.random()*255)+1);
+		b = Math.floor((Math.random()*255)+1);	
+		snakeColor = "rgb(" + r + "," + g +"," + b + ")";
+
+		r = Math.floor((Math.random()*255)+1);
+		g = Math.floor((Math.random()*255)+1);
+		b = Math.floor((Math.random()*255)+1);	
+		backColor = "rgb(" + r + "," + g +"," + b + ")";
+		document.getElementById("body").style.backgroundColor = backColor;
+}
+
+function DiscoMode(){
+	if(discoMode == 0){
+		if(coins >= 500){
+			coins -= 500;
+			discoMode = 2;
+			document.getElementById("discoModeLbl").innerHTML = "Click To Disable";
+		}else{alert("It looks like you don't have enough money :( Get coins by playing!")}
+	}else if(discoMode == 1){
+		discoMode = 2;
+		document.getElementById("discoModeLbl").innerHTML = "Click To Disable";
+	}else if(discoMode == 2){
+		discoMode = 1
+		document.getElementById("discoModeLbl").innerHTML = "Click To Enable";
+	}
+	SaveColors();
+	localStorage.setItem("discoMode", discoMode);
 }
 
 function SaveColors(){
@@ -654,9 +709,21 @@ function LoadSettings(){
 		magicSnakeColor = 0;
 	}
 
+	var sDM = localStorage.getItem("discoMode");
+	if(sDM == 1){
+		discoMode = 1;
+		document.getElementById("discoModeLbl").innerHTML = "Click To Enable";
+	}else if(sDM == 2){
+		discoMode = 2;
+		document.getElementById("discoModeLbl").innerHTML = "Click To Disable";
+	}else{
+		discoMode = 0;
+	}
 }
 
 function ResetAll(){
 	localStorage.removeItem("coins");
 	localStorage.removeItem("gameColors");
+	localStorage.removeItem("discoMode");
+	localStorage.removeItem("magicSnakeColor");
 }
