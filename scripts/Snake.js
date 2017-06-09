@@ -90,6 +90,7 @@ var windowSize = {
 
 function Main() { // starts game, main function to create the game canvas and all the other cool stuff that only needs to be done once
 	LoadSettings();
+	console.log('%c Please no hacking thankyou! ', 'background: #222; color: #bada55; font-size:40px; font-family: Comic Sans MS');
 	document.getElementById("body").style.backgroundColor = backColor;
 	canvas = document.createElement("canvas");  //Create canvas
 	canvas.width = Math.floor((windowSize.width - 50)/cellSize) * cellSize;
@@ -554,15 +555,24 @@ function GenerateAnswer() { 										// generates the question and answer and d
 } 																// END FUNCTION GENERATE ANSWER 
 
 function RndSnakeColor(){
-	if(coins > 30){
+	if(MagicSnakeColor = 0){
+		if(coins > 30){
+			var r, g, b;
+			r = Math.floor((Math.random()*255)+1);
+			g = Math.floor((Math.random()*255)+1);
+			b = Math.floor((Math.random()*255)+1);	
+			snakeColor = "rgb(" + r + "," + g +"," + b + ")";
+			coins -= 30;
+		}else{
+			alert("It looks like you don't have enough money :( Get coins by playing!");
+			console.log("RndSnakeColor")
+		}
+	}else{
 		var r, g, b;
 		r = Math.floor((Math.random()*255)+1);
 		g = Math.floor((Math.random()*255)+1);
 		b = Math.floor((Math.random()*255)+1);	
 		snakeColor = "rgb(" + r + "," + g +"," + b + ")";
-		coins -= 30;
-	}else{
-		alert("It looks like you don't have enough money :( Get coins by playing!");
 	}
 }
 
@@ -577,6 +587,7 @@ function RndBackColor(){
 		coins -= 30;
 	}else{
 		alert("It looks like you don't have enough money :( Get coins by playing!");
+		console.log("RndBackColor has run")
 	}
 }
 
@@ -590,6 +601,7 @@ function RndGameColor(){
 		coins -= 30;
 	}else{
 		alert("It looks like you don't have enough money :( Get coins by playing!");
+		console.log("RndGameColor has run")
 	}
 }
 
