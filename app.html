@@ -45,7 +45,7 @@
 
 			<div id="shop">
 				<h1 style="margin:0; margin-top:5px; margin-bottom:0px; text-align:center; color:white; font-family: Nexa Bold;">MathSnake Shop</h1>
-				<p style="margin-top:0px; text-align:center; color:white; font-family: Nexa Bold;">For The Ultimate Experience</p>
+				<p style="margin-top:0px; text-align:center; color:white; font-family: Nexa Bold;">Tired of Grey?</p>
 				<div class="shopItemsR1">
 					<div>
 						<button id="rndSnakeColorBtn" onclick="RndSnakeColor(); Unfocus(); SaveColors();">
@@ -77,7 +77,13 @@
 					<div>
 						<button id="discoModeBtn" onclick="DiscoMode(); Unfocus(); SaveColors();">
 							<h1 style="font-size:1vw; font-family:Moon Bold">Disco Mode</h1>
-							<p id="discoModeLbl" style="font-size:0.8vw;font-family:Moon Light">500 Coins</p>
+							<p id="discoModeLbl" style="font-size:0.8vw;font-family:Moon Light">300 Coins</p>
+						</button>
+					</div>
+					<div>
+						<button id="missionControlBtn" onclick="MissionControl(); Unfocus();">
+							<h1 style="font-size:1vw; font-family:Moon Bold">Mission Control</h1>
+							<p id="missionControlLbl" style="font-size:0.8vw;font-family:Moon Light">500 Coins</p>
 						</button>
 					</div>
 				</div>
@@ -86,6 +92,11 @@
 				<button id="shopCloseBtn" onclick="Unfocus(); OpenShop(); PlayAgain();">Close</button>
 				<button id="resetBtn" onclick="Unfocus(); ResetAll(); location.reload();">Reset All</button>
 				</div>
+			</div>
+
+			<div id="missionControl">
+				<h1 style="margin:0; margin-top:5px; margin-bottom:0px; text-align:center; color:white; font-family: Nexa Bold;">MISSION CONTROL</h1>
+				<p style="margin-top:0px; text-align:center; color:white; font-family: Nexa Bold;">For The Ultimate Experience</p>
 			</div>
 
 			<div id="footer">

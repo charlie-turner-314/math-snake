@@ -20,10 +20,9 @@ coins=1,
 gameColor = "rgb(50,50,50)",
 backColor = "rgb(200,200,200)",
 snakeColor = "rgb(200,200,200)",
-magicSnakeColor = 0,  	//------------ Not Available In Current Version
 magicBackColor = 0,		//0: not baught, 1: disabled, 2:enabled
-magicGameColor = 0;		//------------ Not Available In Current Version
-discoMode = false;
+discoMode = false,
+missionControl = 0;
 
 var
 canvas,  //The canvas
@@ -37,6 +36,7 @@ frames,
 score,
 playing,
 shopOpen = false,
+mControlOpen = false,
 feeding = 0,
 gotFood = 0,
 movingDirection,
@@ -644,8 +644,8 @@ function DiscoModeFree(){
 
 function DiscoMode(){
 	if(discoMode == 0){
-		if(coins >= 500){
-			coins -= 500;
+		if(coins >= 300){
+			coins -= 300;
 			discoMode = 2;
 			document.getElementById("discoModeLbl").innerHTML = "Click To Disable";
 		}else{alert("It looks like you don't have enough money :( Get coins by playing!")}
@@ -667,6 +667,39 @@ function SaveColors(){
 		'gameColor'  : gameColor
 	}
 	localStorage.setItem("gameColors", JSON.stringify(gameColors));
+}
+
+function MissionControl(){
+	if(missionControl == 0){
+		if(coins >= 500){
+			coins -= 500;
+			missionControl = 1;
+			document.getElementById("missionControlLbl").innerHTML = "Click To Enter";
+		}else{alert("It looks like you don't have enough money :( Get coins by playing!")}
+	}else if(missionControl == 1){
+		OpenMissionControl();
+	}else{
+		console.error("missionControl variable !== 1 || 0. currently == " + missionControl)
+	}
+	localStorage.setItem("missionControl", missionControl);
+}
+
+function OpenMissionControl(){
+	var mControl = document.getElementById("missionControl");
+	document.getElementById("paused").style.opacity = 0;
+	document.getElementById("paused").style.pointerEvents = "none";
+	document.getElementById("shop").style.opacity = 0;
+	document.getElementById("shop").style.pointerEvents = "none";
+	HideGO();
+		if(!mControlOpen){
+			mControlOpen = true;
+			mControl.style.opacity = 1;
+			mControl.style.pointerEvents = "auto";
+		}else{
+			mControlOpen = false;
+			mControl.style.opacity = 0;
+			mControl.style.pointerEvents = "none";
+		}
 }
 
 function LoadSettings(){
@@ -719,6 +752,13 @@ function LoadSettings(){
 	}else{
 		discoMode = 0;
 	}
+
+	if(localStorage.getItem("missionControl") == 1){
+		missionControl = 1;
+		document.getElementById("missionControlLbl").innerHTML = "Click To Enter"
+	} else{
+		missionControl = 0;
+	}
 }
 
 function ResetAll(){
@@ -726,4 +766,5 @@ function ResetAll(){
 	localStorage.removeItem("gameColors");
 	localStorage.removeItem("discoMode");
 	localStorage.removeItem("magicSnakeColor");
+	localStorage.removeItem("missionControl");
 }
