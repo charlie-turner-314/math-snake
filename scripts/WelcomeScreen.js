@@ -8,7 +8,6 @@ speed,
 cellSize,
 operations,
 numberRange,
-increaseFactor,
 difficulty,
 growthInc;
 
@@ -34,7 +33,6 @@ function SaveSettings(){
 		'cellSize' : cellSize,
 		'operations' : operations,
 		'numberRange' : numberRange,
-		'increaseFactor' : increaseFactor,
 		'difficulty' : difficulty,
 		'growthInc' : growthInc
 		}

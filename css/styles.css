@@ -131,7 +131,7 @@ canvas {
 }
 
 #divScore{
-	margin-top:40px;
+	margin-top:-5px;
 	margin-left:20px;
 	font-family:Nexa Bold;
 }
@@ -230,7 +230,7 @@ canvas {
 	background-color: rgba(0,0,0,0.6)
 }
 
-#shop{
+#shop, #missionControl{
 	position:fixed;
 	z-index: 5555;
 	width: 50vw;
@@ -284,14 +284,14 @@ canvas {
     text-align: center;
 }
 
-#magicSnakeColorBtn, #discoModeBtn{
+#magicSnakeColorBtn, #discoModeBtn, #missionControlBtn{
 	background-color: rgba(0,0,0,0);
 	color:white;
 	width: 13vw;
 	border: 1px solid white;
 	transition: 0.5s;
 }
-#magicSnakeColorBtn:hover, #discoModeBtn:hover {
+#magicSnakeColorBtn:hover, #discoModeBtn:hover, #missionControlBtn:hover {
 	background-color: rgba(255,255,255,0.8);
 	color:black;
 	border: 1px solid black;
@@ -301,6 +301,77 @@ canvas {
 .shopItemsR2 > div{
     display: inline-block;
     zoom: 1;
-    width: 49%;
+    width: 32.9%;
     text-align: center;
+}
+
+#speedLbl{
+	color: white;
+	font-family: 'Open Sans';
+	font-size: 1.8vw;
+	text-align: center;
+}
+
+input[type=range] { 
+    -webkit-appearance: none;  
+    height: 0.2vw; 
+    width: 30vh;
+    border: solid rgba(0,0,0,0.3) 1px;
+    border-bottom: solid rgba(0,0,0,0.5) 1px;
+    border-left: solid rgba(0,0,0,0.5) 1px;
+    -webkit-transform: rotate(90deg);
+    -webkit-transform-origin: top left;
+    margin-left: 49%;
+    margin-top: 0px;
+}  
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 1px solid white;
+    height: 20px;
+    width: 14px;
+    border-radius: 20%;
+    background: black;
+    margin-top: -4px;
+}
+
+#cellsLbl, #operationsLbl, #numberRangeLbl, #growthIncLbl{
+	color: white;
+	font-family: 'Open Sans';
+	font-size: 1.8vw;
+	text-align: center;
+}
+
+#backBtn {
+	position:absolute;
+	background-color: rgba(0,0,0,0);
+	color:white;
+	font-family: Noto Sans;
+	width: 7vw;
+	height:6vh;
+	border: 1px solid white;
+	transition: 0.5s;
+	float: top;
+	top:5px;
+	left:5px;
+}
+
+#saveBtn {
+	position:absolute;
+	background-color: rgba(0,0,0,0);
+	color:white;
+	font-family: Noto Sans;
+	width: 7vw;
+	height:6vh;
+	border: 1px solid white;
+	transition: 0.5s;
+	float: top;
+	top:5px;
+	right:5px;
+}
+
+#backBtn:hover, #saveBtn:hover{
+	background-color: rgba(255,255,255,0.8);
+	color:black;
+	border: 1px solid black;
 }

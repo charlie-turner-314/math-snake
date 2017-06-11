@@ -6,6 +6,7 @@
 		<title>MathSnake</title>
 		<link rel="icon" href="favicon.ico">
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
 	</head>
 	<body id="body" onload="LoadPage(); Main()">
 			<div id="divQuestion" style="text-align:center; line-height:5px;">
@@ -45,7 +46,7 @@
 
 			<div id="shop">
 				<h1 style="margin:0; margin-top:5px; margin-bottom:0px; text-align:center; color:white; font-family: Nexa Bold;">MathSnake Shop</h1>
-				<p style="margin-top:0px; text-align:center; color:white; font-family: Nexa Bold;">For The Ultimate Experience</p>
+				<p style="margin-top:0px; text-align:center; color:white; font-family: Nexa Bold;">What Dreams Are Made Of...</p>
 				<div class="shopItemsR1">
 					<div>
 						<button id="rndSnakeColorBtn" onclick="RndSnakeColor(); Unfocus(); SaveColors();">
@@ -77,7 +78,13 @@
 					<div>
 						<button id="discoModeBtn" onclick="DiscoMode(); Unfocus(); SaveColors();">
 							<h1 style="font-size:1vw; font-family:Moon Bold">Disco Mode</h1>
-							<p id="discoModeLbl" style="font-size:0.8vw;font-family:Moon Light">500 Coins</p>
+							<p id="discoModeLbl" style="font-size:0.8vw;font-family:Moon Light">300 Coins</p>
+						</button>
+					</div>
+					<div>
+						<button id="missionControlBtn" onclick="MissionControl(); Unfocus();">
+							<h1 style="font-size:1vw; font-family:Moon Bold">Mission Control</h1>
+							<p id="missionControlLbl" style="font-size:0.8vw;font-family:Moon Light">500 Coins</p>
 						</button>
 					</div>
 				</div>
@@ -88,6 +95,57 @@
 				</div>
 			</div>
 
+			<div id="missionControl">
+				<h1 style="margin:0; margin-top:5px; margin-bottom:0px; text-align:center; color:white; font-family: Nexa Bold;">MISSION CONTROL</h1>
+				<p style="margin-top:0px; text-align:center; color:white; font-family: Nexa Bold;">For The Ultimate Experience</p>
+				<button id="backBtn" onclick="MissionControl(); OpenShop(); Unfocus();">EXIT</button>
+				<button id="saveBtn" onclick="SaveCustom(); Unfocus();">SAVE AND PLAY</button>
+				<div class="missionControlItems">
+					<div id="speed" style="float:left; margin-top:-6px; width:14%">
+						<div id="speedLbl">SPEED</div>
+						<input id="iptSpeed" type="range" step="1" min="1" max="10">
+						<ul style="margin-top:-12px; color:white; font-size:2.2vh; list-style: none; font-family: Nexa Bold; text-align: right; margin-right:20px; line-height: 3.2vh">
+							<li>10</li>
+							<li>9</li>
+							<li>8</li>
+							<li>7</li>	
+							<li>6</li>
+							<li>5</li>
+							<li>4</li>
+							<li>3</li>
+							<li>2</li>
+							<li>1</li>
+						</ul>
+					</div>
+					<div id="cellSize" style="float:left; margin-top:-6px; width:20%">
+						<div id="cellsLbl">CELL SIZE</div>
+						<input id="iptCellSize" type="range" step="1" min="10" max="50">
+						<p style="font-size: 2.2vh; color:white; margin-top: -12px; margin-right:20px; font-family: Nexa Bold; text-align: right">Large</p>
+						<p style="font-size: 2.2vh; color:white; margin-bottom: 12px; margin-right:23px; font-family: Nexa Bold; text-align: right; padding-top: 23.4vh;">Small</p>
+					</div>
+					<div id="operations" style="float:left; margin-top:-6px; width:20%">
+						<div id="operationsLbl">OPERATIONS</div>
+						<input id="iptOperations" type="range" step="1" min="1" max="4">
+						<p style="font-size: 4vh; color:white; margin-top: -18px; margin-right:25px; font-family: Nexa Bold; text-align: right">&times;</p>
+						<p style="font-size: 4vh; color:white; margin-bottom: 10px; margin-right:25px; font-family: Nexa Bold; text-align: right; padding-top: 0;">+</p>
+						<p style="font-size: 4vh; color:white; margin-bottom: 10px; margin-right:25px; font-family: Nexa Bold; text-align: right; padding-top: 0;">&minus;</p>
+						<p style="font-size: 2.2vh; line-height:11vh; color:white; margin-bottom: 12px; margin-right:25px; font-family: Nexa Bold; text-align: right; padding-top: 0;">All</p>
+					</div>
+					<div id="numberRange" style="float:left; margin-left:10px; margin-top:-6px; width:20%">
+						<div id="numberRangeLbl">RANGE</div>
+						<input id="iptNumberRange" type="range" step="1" min="10" max="500">
+						<p style="font-size: 2.2vh; color:white; margin-top: -12px; margin-right:20px; font-family: Nexa Bold; text-align: right">500</p>
+						<p style="font-size: 2.2vh; color:white; margin-bottom: 12px; margin-right:23px; font-family: Nexa Bold; text-align: right; padding-top: 23.4vh;">10</p>
+					</div>
+					<div id="growthInc" style="float:left; margin-left:-10px;margin-top:-6px; width:20%">
+						<div id="growthIncLbl">GROWTH</div>
+						<input id="iptGrowthInc" type="range" step="1" min="1" max="100">
+						<p style="font-size: 2.2vh; color:white; margin-top: -12px; margin-right:20px; font-family: Nexa Bold; text-align: right">100</p>
+						<p style="font-size: 2.2vh; color:white; margin-bottom: 12px; margin-right:23px; font-family: Nexa Bold; text-align: right; padding-top: 23.4vh;">1</p>
+					</div>
+				</div>
+				<div style="background-color: blue"></div>
+			</div>
 			<div id="footer">
 			<a id="home" href="index.html">DIFFICULTY: <span id="difficulty">3</span></a>
 			</div>

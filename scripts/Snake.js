@@ -14,16 +14,15 @@ cellSize=20, //size of cells (pixels)
 speed=5,    // speed of game (1 is super fast --- higher is slower)
 operations=2, // types of questions
 numberRange=50, // range of numbers to do math
-difficulty="UNKNOWN",  //number indicating current difficulty
+difficulty="CUSTOM",  //number indicating current difficulty
 growthInc=5,
 coins=1,
 gameColor = "rgb(50,50,50)",
 backColor = "rgb(200,200,200)",
 snakeColor = "rgb(200,200,200)",
-magicSnakeColor = 0,  	//------------ Not Available In Current Version
 magicBackColor = 0,		//0: not baught, 1: disabled, 2:enabled
-magicGameColor = 0;		//------------ Not Available In Current Version
-discoMode = false;
+discoMode = false,
+missionControl = 0;
 
 var
 canvas,  //The canvas
@@ -37,6 +36,7 @@ frames,
 score,
 playing,
 shopOpen = false,
+mControlOpen = false,
 feeding = 0,
 gotFood = 0,
 movingDirection,
@@ -90,7 +90,7 @@ var windowSize = {
 
 function Main() { // starts game, main function to create the game canvas and all the other cool stuff that only needs to be done once
 	LoadSettings();
-	console.log('%c Please no hacking thankyou! ', 'background: #222; color: #bada55; font-size:40px; font-family: Comic Sans MS');
+	console.log('%c Please no hacking thankyou! ', 'background: rgb(50,0,20); color: rgb(100,0,100); font-size:40px; font-family: Comic Sans MS');
 	document.getElementById("body").style.backgroundColor = backColor;
 	canvas = document.createElement("canvas");  //Create canvas
 	canvas.width = Math.floor((windowSize.width - 50)/cellSize) * cellSize;
@@ -144,7 +144,7 @@ function Update(){
 			document.getElementById("paused").style.opacity = 1;
 			document.getElementById("paused").style.pointerEvents = "auto";
 			}
-			document.getElementById("question").style.opacity = 0;
+			document.getElementById("question").innerHTML = "Move Snake To View Question"
 		}else{ //if not playing but paused
 			document.getElementById("question").innerHTML = question;
 			document.getElementById("question").style.opacity = 1;
@@ -644,8 +644,8 @@ function DiscoModeFree(){
 
 function DiscoMode(){
 	if(discoMode == 0){
-		if(coins >= 500){
-			coins -= 500;
+		if(coins >= 300){
+			coins -= 300;
 			discoMode = 2;
 			document.getElementById("discoModeLbl").innerHTML = "Click To Disable";
 		}else{alert("It looks like you don't have enough money :( Get coins by playing!")}
@@ -669,6 +669,62 @@ function SaveColors(){
 	localStorage.setItem("gameColors", JSON.stringify(gameColors));
 }
 
+function MissionControl(){
+	if(missionControl == 0){
+		if(coins >= 500){
+			coins -= 500;
+			missionControl = 1;
+			document.getElementById("missionControlLbl").innerHTML = "Click To Enter";
+		}else{alert("It looks like you don't have enough money :( Get coins by playing!")}
+	}else if(missionControl == 1){
+		OpenMissionControl();
+	}else{
+		console.error("missionControl variable !== 1 || 0. currently == " + missionControl)
+	}
+	localStorage.setItem("missionControl", missionControl);
+}
+
+function OpenMissionControl(){
+	var mControl = document.getElementById("missionControl");
+	document.getElementById("paused").style.opacity = 0;
+	document.getElementById("paused").style.pointerEvents = "none";
+	document.getElementById("shop").style.opacity = 0;
+	document.getElementById("shop").style.pointerEvents = "none";
+	HideGO();
+		if(!mControlOpen){
+			mControlOpen = true;
+			mControl.style.opacity = 1;
+			mControl.style.pointerEvents = "auto";
+		}else{
+			mControlOpen = false;
+			mControl.style.opacity = 0;
+			mControl.style.pointerEvents = "none";
+		}
+}
+
+function SaveCustom(){
+	if(confirm("This will lose current game. Continue?")){
+		var
+		iptSpeed = document.getElementById("iptSpeed"),
+		iptCellSize = document.getElementById("iptCellSize"),
+		iptOperations = document.getElementById("iptOperations"),
+		iptNumberRange = document.getElementById("iptNumberRange"),
+		iptGrowthInc = document.getElementById("iptGrowthInc");
+
+		localStorage.removeItem("saveSnake")
+		var saveSnake = {
+			'speed' : iptSpeed.value,
+			'cellSize' : (60 - iptCellSize.value),
+			'operations' : Number(iptOperations.value),
+			'numberRange' : (510 - iptNumberRange.value),
+			'difficulty' : "CUSTOM",
+			'growthInc' : (101 - iptGrowthInc.value)
+			}
+		localStorage.setItem("saveSnake", JSON.stringify(saveSnake));
+		location.reload()
+	}
+}
+
 function LoadSettings(){
 	if(localStorage.getItem("saveSnake") !== null){
 		var settings = JSON.parse(localStorage.getItem("saveSnake"));
@@ -676,7 +732,6 @@ function LoadSettings(){
 		if(typeof settings.cellSize !== "undefined") cellSize = settings.cellSize;
 		if(typeof settings.operations !== "undefined") operations = settings.operations;
 		if(typeof settings.numberRange !== "undefined") numberRange = settings.numberRange;
-		if(typeof settings.increaseFactor !== "undefined") increaseFactor = settings.increaseFactor;
 		if(typeof settings.difficulty !== "undefined") difficulty = settings.difficulty;
 		if(typeof settings.growthInc !== "undefined") growthInc = settings.growthInc;
 	}
@@ -719,6 +774,20 @@ function LoadSettings(){
 	}else{
 		discoMode = 0;
 	}
+
+	if(localStorage.getItem("missionControl") == 1){
+		missionControl = 1;
+		document.getElementById("missionControlLbl").innerHTML = "Click To Enter"
+	} else{
+		missionControl = 0;
+	}
+
+	document.getElementById("iptSpeed").value = speed;
+	document.getElementById("iptCellSize").value = 60 - cellSize;
+	document.getElementById("iptOperations").value = operations;
+	document.getElementById("iptNumberRange").value = 500 - numberRange;
+	document.getElementById("iptGrowthInc").value = 101 - growthInc;
+
 }
 
 function ResetAll(){
@@ -726,4 +795,5 @@ function ResetAll(){
 	localStorage.removeItem("gameColors");
 	localStorage.removeItem("discoMode");
 	localStorage.removeItem("magicSnakeColor");
+	localStorage.removeItem("missionControl");
 }
