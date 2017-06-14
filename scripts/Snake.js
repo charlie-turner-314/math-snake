@@ -179,10 +179,14 @@ function Update(){
 			snakeDirection = DOWN;
 		}
 		if (keyState[KEYP] || keyState[KEYESC] || keyState[KEYSPACE]) {
-			snakeDirection = PAUSE;
-			document.getElementById("pausedMsg").innerHTML = "Paused";
-			document.getElementById("pausedMsg").style.fontFamily = "Quicksand Bold";
-			document.getElementById("pausedMsg").style.fontSize = "5vw";
+			if(snakeDirection !== PAUSE){
+				snakeDirection = PAUSE;
+				document.getElementById("pausedMsg").innerHTML = "Paused";
+				document.getElementById("pausedMsg").style.fontFamily = "Quicksand Bold";
+				document.getElementById("pausedMsg").style.fontSize = "5vw";
+			}else if(snakeDirection == PAUSE){
+				snakeDirection = movingDirection;
+			}
 		}
 	}
 	if(discoMode == 2){
@@ -193,7 +197,9 @@ function Update(){
 
 
 	if(frames % speed === 0){
-		movingDirection = snakeDirection;
+		if(snakeDirection !== PAUSE){
+			movingDirection = snakeDirection;
+		}
 		// Get new x and new y
 		var nx = snakeLast.x;
 		var ny = snakeLast.y;
@@ -796,4 +802,5 @@ function ResetAll(){
 	localStorage.removeItem("discoMode");
 	localStorage.removeItem("magicSnakeColor");
 	localStorage.removeItem("missionControl");
+	window.location.href = 'index.html'
 }
