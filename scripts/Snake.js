@@ -22,7 +22,8 @@ backColor = "rgb(200,200,200)",
 snakeColor = "rgb(200,200,200)",
 magicBackColor = 0,		//0: not baught, 1: disabled, 2:enabled
 discoMode = false,
-missionControl = 0;
+missionControl = 0,
+highScore;
 
 var
 canvas,  //The canvas
@@ -91,6 +92,7 @@ var windowSize = {
 function Main() { // starts game, main function to create the game canvas and all the other cool stuff that only needs to be done once
 	LoadSettings();
 	console.log('%c Please no hacking thankyou! ', 'background: rgb(50,0,20); color: rgb(100,0,100); font-size:40px; font-family: Comic Sans MS');
+	document.getElementById("highScore").innerHTML = highScore;
 	document.getElementById("body").style.backgroundColor = backColor;
 	canvas = document.createElement("canvas");  //Create canvas
 	canvas.width = Math.floor((windowSize.width - 50)/cellSize) * cellSize;
@@ -334,6 +336,11 @@ function Update(){
 
 function GameOver(){
 	ResetFoods();
+	if(score > highScore){
+		highScore = score;
+		document.getElementById("highScore").innerHTML = highScore;
+		localStorage.setItem("highScore", highScore);
+	}
 	snakeDirection = PAUSE;
 	gotFood=0;
 	feeding=0;
@@ -780,6 +787,13 @@ function LoadSettings(){
 	}else{
 		discoMode = 0;
 	}
+
+	if(Number(localStorage.getItem("highScore")) >= 1){
+		highScore = Number(localStorage.getItem("highScore"));
+	}else{
+		highScore = 1;
+	}
+
 
 	if(localStorage.getItem("missionControl") == 1){
 		missionControl = 1;
