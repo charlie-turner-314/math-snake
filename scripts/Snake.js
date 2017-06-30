@@ -77,6 +77,12 @@ KEYP=80,
 KEYESC=27,
 KEYSPACE=32;
 
+// Swiping controls
+swipeRight = false,
+swipeDown = false,
+swipeLeft = false,
+swipeUp = false;
+
 function SpeedUp(){
 	if(speed !== 1){
 	speed--
@@ -111,13 +117,58 @@ function Main() { // starts game, main function to create the game canvas and al
 	document.addEventListener("keyup", function(evt){
 		delete keyState[evt.keyCode];
 	});
+
+	window.addEventListener
+
 	Init();
 	Loop();
 }
+// Hammer testing for touch screen
+
+var myElement = document.getElementById('body');
+
+// create a simple instance
+// by default, it only adds horizontal recognizers
+var mc = new Hammer(myElement);
+
+// let the pan gesture support all directions.
+// this will block the vertical scrolling on a touch-device while on the element
+mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+
+// listen to events...
+mc.on("panleft panright panup pandown tap press", function(ev) {
+	swipeDown = false; swipeUp = false; swipeLeft = false; swipeRight = false;
+    switch(ev.type){
+    	case 'pandown': 
+    		swipeDown = true;
+    		break;
+    	case 'panup':
+    		swipeUp = true;
+    		break;
+    	case 'panleft':
+    		swipeLeft = true;
+    		break;
+    	case 'panright':
+    		swipeRight = true;
+    		break;
+    	default:
+    		snakeDirection = PAUSE;
+			document.getElementById("pausedMsg").innerHTML = "Paused";
+			document.getElementById("pausedMsg").style.fontFamily = "Quicksand Bold";
+			document.getElementById("pausedMsg").style.fontSize = "5vw";
+    		break;
+    }
+});
+
+function ResetSwipes(){ swipeDown = false; swipeUp = false; swipeLeft = false; swipeRight = false; }
+
+// end hammer 
+
+
 
 function Init(){
 	document.getElementById("coins").innerHTML = coins;
-	document.getElementById("pausedMsg").innerHTML = "Use Arrow Keys To Move Snake";
+	document.getElementById("pausedMsg").innerHTML = "Use Arrow Keys or Swipe To Move Snake";
 	document.getElementById("pausedMsg").style.fontFamily = "Quicksand Bold";
 	document.getElementById("pausedMsg").style.fontSize = "5vw";
 	playing = true;
@@ -160,35 +211,40 @@ function Update(){
 	}
 
 	if(playing){
-		if ((keyState[KEYLEFT] || keyState[KEYA]) && snake.length === 1) {
+		if ((keyState[KEYLEFT] || keyState[KEYA] || swipeLeft) && snake.length === 1) {
 			snakeDirection = LEFT;
-		}else if ((keyState[KEYLEFT] || keyState[KEYA]) && movingDirection !== RIGHT) {
+			ResetSwipes();
+		}else if ((keyState[KEYLEFT] || keyState[KEYA] || swipeLeft) && movingDirection !== RIGHT) {
 			snakeDirection = LEFT;
+			ResetSwipes();
 		}
-		if ((keyState[KEYUP] || keyState[KEYW]) && snake.length === 1) {
+		if ((keyState[KEYUP] || keyState[KEYW] || swipeUp) && snake.length === 1) {
 			snakeDirection = UP;
-		}else if ((keyState[KEYUP] || keyState[KEYW]) && movingDirection !== DOWN) {
+			ResetSwipes();
+		}else if ((keyState[KEYUP] || keyState[KEYW] || swipeUp) && movingDirection !== DOWN) {
 			snakeDirection = UP;
+			ResetSwipes();
 		}
-		if ((keyState[KEYRIGHT] || keyState[KEYD]) && snake.length === 1) {
+		if ((keyState[KEYRIGHT] || keyState[KEYD] || swipeRight) && snake.length === 1) {
 			snakeDirection = RIGHT;
-		}else if ((keyState[KEYRIGHT] || keyState[KEYD]) && movingDirection !== LEFT) {
+			ResetSwipes();
+		}else if ((keyState[KEYRIGHT] || keyState[KEYD] || swipeRight) && movingDirection !== LEFT) {
 			snakeDirection = RIGHT;
+			ResetSwipes();
 		}
-		if ((keyState[KEYDOWN] || keyState[KEYS]) && snake.length === 1) {
+		if ((keyState[KEYDOWN] || keyState[KEYS] || swipeDown) && snake.length === 1) {
 			snakeDirection = DOWN;
-		}else if ((keyState[KEYDOWN] || keyState[KEYS]) && movingDirection !== UP) {
+			ResetSwipes();
+		}else if ((keyState[KEYDOWN] || keyState[KEYS] || swipeDown) && movingDirection !== UP) {
 			snakeDirection = DOWN;
+			ResetSwipes();
 		}
 		if (keyState[KEYP] || keyState[KEYESC] || keyState[KEYSPACE]) {
-			if(snakeDirection !== PAUSE){
+			
 				snakeDirection = PAUSE;
 				document.getElementById("pausedMsg").innerHTML = "Paused";
 				document.getElementById("pausedMsg").style.fontFamily = "Quicksand Bold";
 				document.getElementById("pausedMsg").style.fontSize = "5vw";
-			}else if(snakeDirection == PAUSE){
-				snakeDirection = movingDirection;
-			}
 		}
 	}
 	if(discoMode == 2){
