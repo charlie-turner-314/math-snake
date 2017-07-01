@@ -97,12 +97,12 @@ var windowSize = {
 
 function Main() { // starts game, main function to create the game canvas and all the other cool stuff that only needs to be done once
 	LoadSettings();
-	console.log('%c Please no hacking thankyou! ', 'background: rgb(50,0,20); color: rgb(100,0,100); font-size:40px; font-family: Comic Sans MS');
+	console.log('%c Console Editing Disabled ', 'background: rgb(200,200,200); color: rgb(0,0,0); font-size:20px;');
 	document.getElementById("highScore").innerHTML = highScore;
 	document.getElementById("body").style.backgroundColor = backColor;
 	canvas = document.createElement("canvas");  //Create canvas
 	canvas.width = Math.floor((windowSize.width - 50)/cellSize) * cellSize;
-	canvas.height = Math.floor((windowSize.height - 100)/cellSize) * cellSize;
+	canvas.height = Math.floor((windowSize.height - 200)/cellSize) * cellSize;
 	context = canvas.getContext("2d");
 	document.body.appendChild(canvas);
 	context.lineWidth = 3;	
@@ -126,16 +126,11 @@ function Main() { // starts game, main function to create the game canvas and al
 // Hammer testing for touch screen
 
 var myElement = document.getElementById('body');
-
-// create a simple instance
-// by default, it only adds horizontal recognizers
 var mc = new Hammer(myElement);
 
-// let the pan gesture support all directions.
-// this will block the vertical scrolling on a touch-device while on the element
 mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 
-// listen to events...
+// listen to events
 mc.on("panleft panright panup pandown tap press", function(ev) {
 	swipeDown = false; swipeUp = false; swipeLeft = false; swipeRight = false;
     switch(ev.type){
