@@ -16,9 +16,10 @@ body {
 canvas {
 	padding: 0;
     margin: auto;
+    margin-bottom: 25px;
     display: block;
     position: absolute;
-    top: -35px;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
@@ -147,7 +148,7 @@ canvas {
 	font-family: Nexa Bold;
 	text-align: center;
     position: fixed;
-    bottom: 100px;
+    bottom: 4px;
     width: 100%;
 }
 

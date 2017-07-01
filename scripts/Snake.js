@@ -102,7 +102,7 @@ function Main() { // starts game, main function to create the game canvas and al
 	document.getElementById("body").style.backgroundColor = backColor;
 	canvas = document.createElement("canvas");  //Create canvas
 	canvas.width = Math.floor((windowSize.width - 50)/cellSize) * cellSize;
-	canvas.height = Math.floor((windowSize.height - 200)/cellSize) * cellSize;
+	canvas.height = Math.floor((windowSize.height - 100)/cellSize) * cellSize;
 	context = canvas.getContext("2d");
 	document.body.appendChild(canvas);
 	context.lineWidth = 3;	
