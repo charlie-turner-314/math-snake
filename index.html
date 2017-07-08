@@ -69,17 +69,32 @@ h3 {
   background-image: url(images/MathSnake-Logo-full.png);
 }
 
+.logomobile {display:none;}
+.logodesktop {display:display;}
+
+@media (max-width : 320px) {
+.logomobile {display:block;}	
+.logodesktop {display:none;}
+
 </style>
 
 <script src="scripts/WelcomeScreen.js"></script>
 
 <body id="body" onload="LoadPage()">
-	<div align=center>
-		<object id="svgLogo" style="float:middle; padding:0; margin:0; width:33vw;" type="image/svg+xml" data="mathsnake-logo-svg.svg" class="logo">
-		  MathSnake Logo <!-- fallback image in CSS -->
-		</object>
+	<div class="logomobile">
+		<div align=center>
+			<object id="svgLogo" style="float:middle; padding:0; margin:0; width:90vw;" type="image/svg+xml" data="mathsnake-logo-svg.svg" class="logo">
+			  MathSnake Logo <!-- fallback image in CSS -->
+			</object>
+		</div>
 	</div>
-
+	<div class="logodesktop">
+		<div align=center>
+			<object id="svgLogo" style="float:middle; padding:0; margin:0; width:33vw;" type="image/svg+xml" data="mathsnake-logo-svg.svg" class="logo">
+			  MathSnake Logo <!-- fallback image in CSS -->
+			</object>
+		</div>
+	</div>
 	<h1 style="padding:0; margin:0; font-family:Nexa Bold; text-align:center; font-size: 5vh">A Javascript Snake Game With A Twist</h1>
 	<h2 style="font-family:Nexa Light; text-align:center; font-size: 4vh">Select Difficulty To Begin</h2>
 	<br>
