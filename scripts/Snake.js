@@ -131,29 +131,31 @@ var mc = new Hammer(myElement);
 mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 
 // listen to events
-mc.on("panleft panright panup pandown tap press", function(ev) {
-	swipeDown = false; swipeUp = false; swipeLeft = false; swipeRight = false;
-    switch(ev.type){
-    	case 'pandown': 
-    		swipeDown = true;
-    		break;
-    	case 'panup':
-    		swipeUp = true;
-    		break;
-    	case 'panleft':
-    		swipeLeft = true;
-    		break;
-    	case 'panright':
-    		swipeRight = true;
-    		break;
-    	default:
-    		snakeDirection = PAUSE;
-			document.getElementById("pausedMsg").innerHTML = "Paused";
-			document.getElementById("pausedMsg").style.fontFamily = "Quicksand Bold";
-			document.getElementById("pausedMsg").style.fontSize = "5vw";
-    		break;
-    }
-});
+if(playing){
+	mc.on("panleft panright panup pandown tap press", function(ev) {
+		swipeDown = false; swipeUp = false; swipeLeft = false; swipeRight = false;
+	    switch(ev.type){
+	    	case 'pandown': 
+	    		swipeDown = true;
+	    		break;
+	    	case 'panup':
+	    		swipeUp = true;
+	    		break;
+	    	case 'panleft':
+	    		swipeLeft = true;
+	    		break;
+	    	case 'panright':
+	    		swipeRight = true;
+	    		break;
+	    	default:
+	    		snakeDirection = PAUSE;
+				document.getElementById("pausedMsg").innerHTML = "Paused";
+				document.getElementById("pausedMsg").style.fontFamily = "Quicksand Bold";
+				document.getElementById("pausedMsg").style.fontSize = "5vw";
+	    		break;
+	    }
+	});
+}
 
 function ResetSwipes(){ swipeDown = false; swipeUp = false; swipeLeft = false; swipeRight = false; }
 
