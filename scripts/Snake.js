@@ -131,8 +131,8 @@ var mc = new Hammer(myElement);
 mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 
 // listen to events
-if(playing){
-	mc.on("panleft panright panup pandown tap press", function(ev) {
+mc.on("panleft panright panup pandown tap press", function(ev) {
+	if(playing){
 		swipeDown = false; swipeUp = false; swipeLeft = false; swipeRight = false;
 	    switch(ev.type){
 	    	case 'pandown': 
@@ -142,7 +142,7 @@ if(playing){
 	    		swipeUp = true;
 	    		break;
 	    	case 'panleft':
-	    		swipeLeft = true;
+	   			swipeLeft = true;
 	    		break;
 	    	case 'panright':
 	    		swipeRight = true;
@@ -154,8 +154,8 @@ if(playing){
 				document.getElementById("pausedMsg").style.fontSize = "5vw";
 	    		break;
 	    }
-	});
-}
+	}
+});
 
 function ResetSwipes(){ swipeDown = false; swipeUp = false; swipeLeft = false; swipeRight = false; }
 
