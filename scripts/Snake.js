@@ -758,10 +758,12 @@ function OpenMissionControl(){
 	document.getElementById("shop").style.pointerEvents = "none";
 	HideGO();
 		if(!mControlOpen){
+			playing = false;
 			mControlOpen = true;
 			mControl.style.opacity = 1;
 			mControl.style.pointerEvents = "auto";
 		}else{
+			playing = true;
 			mControlOpen = false;
 			mControl.style.opacity = 0;
 			mControl.style.pointerEvents = "none";
