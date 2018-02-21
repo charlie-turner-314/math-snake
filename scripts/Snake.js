@@ -564,8 +564,8 @@ function GenerateAnswer() { 										// generates the question and answer and d
 			answer = n1 + n2;
 			break;
 		case 3 : 
-			if(n2 > n1) question = "   " + n1 + " &minus; " + n2;
-			if(n1 > n2) question = "   " + n2 + " &minus; " + n1;
+			if(n2 > n1) question = "   " + n2 + " &minus; " + n1;
+			if(n1 > n2) question = "   " + n1 + " &minus; " + n2;
 			answer = Math.abs(n1 - n2); 
 			break;
 		case 4 :
@@ -580,8 +580,8 @@ function GenerateAnswer() { 										// generates the question and answer and d
 					answer = n1 - n2;
 					break;
 				case 3:
-					if(n2 > n1) question = "   " + n1 + " &minus; " + n2;
-					if(n1 > n2) question = "   " + n2 + " &minus; " + n1;
+					if(n2 > n1) question = "   " + n2 + " &minus; " + n1;
+					if(n1 > n2) question = "   " + n1 + " &minus; " + n2;
 					answer = Math.abs(n1 - n2); 
 					break;
 			}
